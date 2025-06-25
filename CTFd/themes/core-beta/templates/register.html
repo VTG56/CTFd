@@ -1,83 +1,150 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+  {{ super() }}
+  <style>
+    body {
+        background-color: #000;
+    }
+    .register-hero {
+      background: url('{{ url_for("views.themes", path="img/Banner.png") }}') no-repeat center bottom fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 15px;
+      background-position-y: bottom;
+    }
+    .register-container {
+      background: rgba(44, 108, 179, 0.95);
+      border-radius: 15px;
+      padding: 2rem 3rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      border: 4px solid #ffcc00;
+      position: relative;
+      z-index: 2;
+    }
+    .register-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+    .register-title {
+      color: #ffcc00;
+      text-shadow: 3px 3px 0 #1a3a5f, -1px -1px 0 #1a3a5f, 1px -1px 0 #1a3a5f, -1px 1px 0 #1a3a5f, 1px 1px 0 #1a3a5f;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .form-label {
+      font-weight: bold;
+      color: #ffcc00;
+      font-size: 1.1rem;
+    }
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 3px solid #ffcc00;
+      border-radius: 8px;
+      color: #2c6cb3;
+      font-weight: bold;
+    }
+    .form-control:focus {
+      background-color: white;
+      border-color: #ffcc00;
+      box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.25);
+    }
+    .btn-pokemon-yellow {
+      background-color: #ffcc00;
+      color: #2c6cb3;
+      border: 3px solid #2c6cb3;
+      padding: 0.8rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 #d4a900;
+    }
+    .btn-pokemon-yellow:hover {
+      background-color: #ffd633;
+      color: #ff0000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #d4a900;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <div class="jumbotron">
-    <div class="container">
-      <h1>
-        {% trans %}Register{% endtrans %}
-      </h1>
-    </div>
-  </div>
+<div class="register-hero">
+  <div class="register-container">
+    <h1 class="register-title">
+      {% trans %}Register{% endtrans %}
+    </h1>
+    
+    {% include "components/errors.html" %}
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        {% include "components/errors.html" %}
+    {% if integrations.mlc() %}
+      <a class="btn btn-secondary btn-lg btn-block w-100" href="{{ url_for('auth.oauth_login') }}">
+        Login with Major League Cyber
+      </a>
+      <hr>
+    {% endif %}
 
-        {% if integrations.mlc() %}
-          <a class="btn btn-secondary btn-lg btn-block w-100" href="{{ url_for('auth.oauth_login') }}">
-            Login with Major League Cyber
-          </a>
+    {% with form = Forms.auth.RegistrationForm() %}
+      {% from "macros/forms.html" import render_extra_fields %}
+      <form method="post" accept-charset="utf-8" role="form">
+        <div class="mb-3">
+          <b>{{ form.name.label(class="form-label") }}</b>
+          {{ form.name(class="form-control", value=name, autocomplete="username") }}
+          <small class="form-text" style="color: #ffcc00;">{% trans %}Your username on the site{% endtrans %}</small>
+        </div>
 
-          <hr>
+        <div class="mb-3">
+          <b>{{ form.email.label(class="form-label") }}</b>
+          {{ form.email(class="form-control", value=email, autocomplete="email") }}
+          <small class="form-text" style="color: #ffcc00;">{% trans %}Never shown to the public{% endtrans %}</small>
+        </div>
+
+        <div class="mb-3">
+          <b>{{ form.password.label(class="form-label") }}</b>
+          {{ form.password(class="form-control", value=password, autocomplete="new-password") }}
+          <small class="form-text" style="color: #ffcc00;">{% trans %}Password used to log into your account{% endtrans %}</small>
+        </div>
+
+        {{ form.nonce() }}
+        {{ render_extra_fields(form.extra) }}
+
+        <div class="row pt-3">
+          <div class="col-md-12">
+            {{ form.submit(class="btn btn-pokemon-yellow w-100", value='Register') }}
+          </div>
+        </div>
+
+        {% if Configs.tos_or_privacy %}
+          <div class="row pt-3">
+            <div class="col-md-12 text-center">
+              <small class="text-center" style="color: #ffcc00;">
+                {% trans trimmed privacy_link=Configs.privacy_link, tos_link=Configs.tos_link %}
+                By registering, you agree to the
+                <a href="{{ privacy_link }}" target="_blank">privacy policy</a>
+                and <a href="{{ tos_link }}" target="_blank">terms of service</a>
+                {% endtrans %}
+              </small>
+            </div>
+          </div>
         {% endif %}
-
-        {% with form = Forms.auth.RegistrationForm() %}
-
-          {% from "macros/forms.html" import render_extra_fields %}
-
-          <form method="post" accept-charset="utf-8" role="form">
-
-            <div class="mb-3">
-              <b>{{ form.name.label(class="form-label") }}</b>
-              {{ form.name(class="form-control", value=name, autocomplete="username") }}
-              <small class="form-text text-muted">
-                {% trans %}Your username on the site{% endtrans %}
-              </small>
-            </div>
-
-            <div class="mb-3">
-              <b>{{ form.email.label(class="form-label") }}</b>
-              {{ form.email(class="form-control", value=email, autocomplete="email") }}
-              <small class="form-text text-muted">
-                {% trans %}Never shown to the public{% endtrans %}
-              </small>
-            </div>
-
-            <div class="mb-3">
-              <b>{{ form.password.label(class="form-label") }}</b>
-              {{ form.password(class="form-control", value=password, autocomplete="new-password") }}
-              <small class="form-text text-muted">
-                {% trans %}Password used to log into your account{% endtrans %}
-              </small>
-            </div>
-
-            {{ form.nonce() }}
-
-            {{ render_extra_fields(form.extra) }}
-
-            <div class="row pt-3">
-              <div class="col-6 col-md-4 offset-6 offset-md-8">
-                {{ form.submit(class="btn btn-block btn-primary w-100") }}
-              </div>
-            </div>
-
-            {% if Configs.tos_or_privacy %}
-              <div class="row pt-3">
-                <div class="col-md-12 text-center">
-                  <small class="text-muted text-center">
-                    {% trans trimmed privacy_link=Configs.privacy_link, tos_link=Configs.tos_link %}
-                    By registering, you agree to the
-                    <a href="{{ privacy_link }}" target="_blank">privacy policy</a>
-                    and <a href="{{ tos_link }}" target="_blank">terms of service</a>
-                    {% endtrans %}
-                  </small>
-                </div>
-              </div>
-            {% endif %}
-          </form>
-        {% endwith %}
-      </div>
-    </div>
+      </form>
+    {% endwith %}
   </div>
+</div>
 {% endblock %}
