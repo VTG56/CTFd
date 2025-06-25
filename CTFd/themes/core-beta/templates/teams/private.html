@@ -474,10 +474,10 @@
   <script>
       window.stats_data = {{ {'type': 'team', 'id': team.id, 'name': team.name, 'account_id': 'me'} | tojson }};
       window.team_captain = {{ (user.id == team.captain_id) | tojson }};
-      const USER_ID = {{ user.id | tojson }};
-      const TEAM_ID = {{ team.id | tojson }};
-      const NAME = {{ user.name | tojson }};
-      const NONCE = {{ Session.nonce | tojson }};
+      const USER_ID = {{ user.id | tojson }},
+            TEAM_ID = {{ team.id | tojson }},
+            NAME = {{ user.name | tojson }},
+            NONCE = {{ Session.nonce | tojson }};
   </script>
   {{ Assets.js("assets/js/teams/private.js") }}
 {% endblock %}

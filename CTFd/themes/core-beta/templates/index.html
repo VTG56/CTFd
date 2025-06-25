@@ -14,10 +14,8 @@
         }
         
         .pokemon-hero {
-            background: url('{{ url_for("views.themes", path="img/Banner.png") }}') no-repeat center bottom;
-            background-size: cover;
-            background-position: center bottom;
-            color: #333;
+            background-color: #2c6cb3;
+            color: white;
             min-height: 100vh;
             display: flex;
             align-items: flex-start;
@@ -25,16 +23,6 @@
             position: relative;
             overflow: hidden;
             padding-top: 10vh;
-        }
-        .pokemon-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.1); /* Reduced opacity from 0.6 to 0.3 (50% brighter) */
-            z-index: 1;
         }
         .pokemon-hero .container {
             position: relative;

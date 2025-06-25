@@ -1,66 +1,151 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    :root {
+        --pokemon-yellow: #ffcc00;
+        --pokemon-blue: #2c6cb3;
+        --table-bg: rgba(255, 255, 255, 0.9);
+        --table-border: #ffcc00;
+        --table-shadow: rgba(0, 0, 0, 0.2);
+        --gold-medal: #ffd700;
+        --silver-medal: #c0c0c0;
+        --bronze-medal: #cd7f32;
+    }
+
+    .jumbotron {
+        background-color: var(--pokemon-blue);
+        color: var(--pokemon-yellow);
+        padding: 2rem 1rem;
+        border-bottom: 5px solid var(--pokemon-yellow);
+        margin-bottom: 2rem;
+        border-radius: 0;
+    }
+
+    .jumbotron h1,
+    .jumbotron .h1 {
+        font-family: 'Pokemon Solid', sans-serif;
+        font-weight: bold;
+        text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .pokemon-font {
+        font-family: 'Pokemon Solid', sans-serif;
+    }
+
+    .hall-of-fame-table {
+        background: var(--table-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px var(--table-shadow);
+        border: 4px solid var(--table-border);
+    }
+
+    .hall-of-fame-table thead th {
+        background-color: var(--pokemon-blue);
+        color: var(--pokemon-yellow);
+        font-family: 'Pokemon Solid', sans-serif;
+        font-size: 1.2rem;
+        border-bottom: 4px solid var(--table-border);
+        text-align: center;
+    }
+
+    .hall-of-fame-table tbody tr {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .hall-of-fame-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .hall-of-fame-table tbody tr:hover {
+        background-color: rgba(255, 204, 0, 0.2);
+    }
+
+    .hall-of-fame-table .rank-col { width: 10%; }
+    .hall-of-fame-table .team-col { width: 70%; }
+    .hall-of-fame-table .score-col { width: 20%; }
+
+    .rank-medal {
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+
+    .rank-1 { color: var(--gold-medal); }
+    .rank-2 { color: var(--silver-medal); }
+    .rank-3 { color: var(--bronze-medal); }
+
+    .current-user {
+        background-color: rgba(44, 108, 179, 0.3) !important;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-  <div class="jumbotron">
+<div class="jumbotron">
     <div class="container">
-      <h1>
-        {% trans %}Scoreboard{% endtrans %}
-      </h1>
+        <h1 class="pokemon-font">Hall of Fame</h1>
+        <p class="lead">See which trainers are leading the pack!</p>
     </div>
-  </div>
-  <div class="container">
+</div>
+
+<div class="container">
     {% include "components/errors.html" %}
 
     <div id="score-graph" class="align-items-center" :class="{'d-flex': show, 'd-none': !show}" x-data="ScoreboardDetail" x-ref="scoregraph" @bracket-change.window="activeBracket=$event.detail; update();">
-      <div class="col-md-12 text-center">
-        <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
-      </div>
+        <div class="col-md-12 text-center">
+            <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+        </div>
     </div>
 
     <div id="scoreboard" class="row" x-data="ScoreboardList">
-      <template x-if="brackets.length && standings.length">
-        <div class="col-md-12 py-3">
-          <nav class="nav nav-pills nav-fill">
-            <button :class="{'nav-link': true, 'active': !activeBracket}" @click="activeBracket=null">{% trans %}All{% endtrans %}</button>
-            <template x-for="bracket in brackets">
-              <button :class="{'nav-link': true, 'active': activeBracket == bracket.id}" x-text="bracket.name" @click="activeBracket=bracket.id"></button>
-            </template>
-          </nav>
+        <template x-if="brackets.length && standings.length">
+            <div class="col-md-12 py-3">
+                <nav class="nav nav-pills nav-fill">
+                    <button :class="{'nav-link': true, 'active': !activeBracket}" @click="activeBracket=null">{% trans %}All{% endtrans %}</button>
+                    <template x-for="bracket in brackets">
+                        <button :class="{'nav-link': true, 'active': activeBracket == bracket.id}" x-text="bracket.name" @click="activeBracket=bracket.id"></button>
+                    </template>
+                </nav>
+            </div>
+        </template>
+
+        <div class="col-md-12" x-show="standings.length">
+            <table class="table align-middle hall-of-fame-table">
+                <thead>
+                    <tr>
+                        <th class="rank-col">{% trans %}Rank{% endtrans %}</th>
+                        <th class="team-col text-start ps-3">{{ get_mode_as_word(capitalize=True) }}</th>
+                        <th class="score-col">{% trans %}Score{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="(standing, index) in standings.filter(i => activeBracket ? i.bracket_id==activeBracket : true)">
+                        <tr :class="{'current-user': standing.account_id == {{ session.get('id') | tojson }} }">
+                            <td class="rank-col text-center">
+                                <strong x-text="index + 1"></strong>
+                                <i class="fas fa-medal rank-medal" :class="{'rank-1': index === 0, 'rank-2': index === 1, 'rank-3': index === 2}" x-show="index < 3"></i>
+                            </td>
+                            <td class="team-col text-start">
+                                <a :href="standing.account_url" x-text="standing.name"></a>
+                                <template x-if="standing.bracket_name">
+                                    <span class="badge bg-secondary ms-2" x-text="standing.bracket_name"></span>
+                                </template>
+                            </td>
+                            <td class="score-col text-center" x-text="standing.score"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
         </div>
-      </template>
 
-      <div class="col-md-12" x-show="standings.length">
-        <table class="table table-striped align-middle">
-          <thead>
-          <tr>
-            <th style="width: 10px">{% trans %}Place{% endtrans %}</th>
-            <th class="text-start ps-3">{{ get_mode_as_word(capitalize=True) }}</th>
-            <th>{% trans %}Score{% endtrans %}</th>
-          </tr>
-          </thead>
-
-          <tbody>
-            <template x-for="(standing, index) in standings.filter(i => activeBracket ? i.bracket_id==activeBracket : true)">
-              <tr>
-                <th scope="row" class="text-center" x-text="index + 1"></th>
-                <td class="text-start">
-                  <a :href="standing.account_url" x-text="standing.name"></a>
-                  <template x-if="standing.bracket_name">
-                    <span class="badge bg-secondary ms-2" x-text="standing.bracket_name"></span>
-                  </template>
-                </td>
-                <td x-text="standing.score"></td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="col-md-12" x-show="! standings.length">
-        <h3 class="text-center text-muted">{% trans %}Scoreboard is empty{% endtrans %}</h3>
-      </div>
+        <div class="col-md-12" x-show="!standings.length">
+            <h3 class="text-center text-muted pokemon-font">Scoreboard is empty</h3>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
