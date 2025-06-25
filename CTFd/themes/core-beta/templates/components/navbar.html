@@ -65,12 +65,11 @@
 
       <ul class="navbar-nav ms-md-auto d-block d-sm-flex d-md-flex">
         {% if authed() %}
-
           {% if is_admin() %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('admin.view') }}">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Admin Panel{% endtrans %}">
-                    <i class="fas fa-wrench d-none d-md-inline d-lg-none"></i>
+                  <i class="fas fa-wrench d-none d-md-inline d-lg-none"></i>
                 </span>
                 <span class="d-sm-inline d-md-none d-lg-inline">
                   <i class="fas fa-wrench pe-1"></i>
@@ -86,9 +85,9 @@
                 <i class="fas fa-bell d-none d-md-inline d-lg-none"></i>
               </span>
               <span class="d-sm-inline d-md-none d-lg-inline">
-                  <i class="fas fa-bell pe-1"></i>
-                  <span x-data x-show="$store.unread_count > 0" x-text="$store.unread_count" class="badge rounded-pill bg-danger badge-notification"></span>
-                  {% trans %}Notifications{% endtrans %}
+                <i class="fas fa-bell pe-1"></i>
+                <span x-data x-show="$store.unread_count > 0" x-text="$store.unread_count" class="badge rounded-pill bg-danger badge-notification"></span>
+                {% trans %}Notifications{% endtrans %}
               </span>
             </a>
           </li>
