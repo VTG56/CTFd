@@ -45,6 +45,35 @@
             max-height: 200px;
             object-fit: contain;
         }
+
+        .hero-logo-left, .hero-logo-right {
+            position: absolute;
+            z-index: 5;
+            width: auto;
+        }
+        .hero-logo-left {
+            top: 30px;
+            left: 40px;
+            max-height: 120px;
+        }
+        .hero-logo-right {
+            top: 30px;
+            right: 40px;
+            max-height: 100px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-logo-left, .hero-logo-right {
+                max-height: 70px;
+                top: 20px;
+            }
+            .hero-logo-left {
+                left: 20px;
+            }
+            .hero-logo-right {
+                right: 20px;
+            }
+        }
         
         @media (max-width: 768px) {
             .pokemon-title {
@@ -181,6 +210,8 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="pokemon-hero">
+    <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="CC Logo" class="hero-logo-left">
+    <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="RVCE Logo" class="hero-logo-right">
     <div class="container text-center">
         <div class="logo-container mb-4">
             <img src="{{ url_for('views.themes', path='img/Hackemon_Logo.png') }}" alt="HACKeMON" class="hackemon-logo">
