@@ -51,17 +51,21 @@
       color: #ffcc00;
       font-size: 1.1rem;
     }
-    .form-control {
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 3px solid #ffcc00;
-      border-radius: 8px;
-      color: #2c6cb3;
-      font-weight: bold;
+    .form-control, 
+    .form-control:focus, 
+    .form-control:active,
+    .form-control:focus-visible {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      border: 3px solid #ffcc00 !important;
+      border-radius: 8px !important;
+      color: #2c6cb3 !important;
+      font-weight: bold !important;
+      box-shadow: none !important;
     }
     .form-control:focus {
-      background-color: white;
-      border-color: #ffcc00;
-      box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.25);
+      background-color: white !important;
+      border-color: #ffcc00 !important;
+      box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.25) !important;
     }
     .btn-pokemon-yellow {
       background-color: #ffcc00;

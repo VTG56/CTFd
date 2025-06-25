@@ -1,55 +1,139 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+  {{ super() }}
+  <style>
+    body {
+        background-color: #000;
+    }
+    .login-hero {
+      background: url('{{ url_for("views.themes", path="img/Banner.png") }}') no-repeat center bottom fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 15px;
+      background-position-y: bottom;
+    }
+    .login-container {
+      background: rgba(44, 108, 179, 0.95);
+      border-radius: 15px;
+      padding: 2rem 3rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      border: 4px solid #ffcc00;
+      position: relative;
+      z-index: 2;
+    }
+    .login-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+    .login-title {
+      color: #ffcc00;
+      text-shadow: 3px 3px 0 #1a3a5f, -1px -1px 0 #1a3a5f, 1px -1px 0 #1a3a5f, -1px 1px 0 #1a3a5f, 1px 1px 0 #1a3a5f;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .form-label {
+      font-weight: bold;
+      color: #ffcc00;
+      font-size: 1.1rem;
+    }
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 3px solid #ffcc00;
+      border-radius: 8px;
+      color: #2c6cb3;
+      font-weight: bold;
+    }
+    .form-control:focus {
+      background-color: white;
+      border-color: #ffcc00;
+      box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.25);
+    }
+    .btn-pokemon-yellow {
+      background-color: #ffcc00;
+      color: #2c6cb3;
+      border: 3px solid #2c6cb3;
+      padding: 0.8rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 0 #d4a900;
+    }
+    .btn-pokemon-yellow:hover {
+      background-color: #ffd633;
+      color: #ff0000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #d4a900;
+    }
+    .forgot-password-link {
+        color: #ffcc00;
+        font-weight: bold;
+    }
+    .forgot-password-link:hover {
+        color: #fff;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-  <div class="jumbotron">
-    <div class="container">
-      <h1>
-        {% trans %}Login{% endtrans %}
-      </h1>
-    </div>
+<div class="login-hero">
+  <div class="login-container">
+    <h1 class="login-title">
+      {% trans %}Login{% endtrans %}
+    </h1>
+    
+    {% include "components/errors.html" %}
+
+    {% if integrations.mlc() %}
+      <a class="btn btn-secondary btn-lg btn-block w-100" href="{{ url_for('auth.oauth_login') }}">
+        Login with Major League Cyber
+      </a>
+      <hr>
+    {% endif %}
+
+    {% with form = Forms.auth.LoginForm() %}
+      <form method="post" accept-charset="utf-8">
+        <div class="mb-3">
+          <b>{{ form.name.label(class="form-label") }}</b>
+          {{ form.name(class="form-control", value=name, autocomplete="username email") }}
+        </div>
+
+        <div class="mb-3">
+          <b>{{ form.password.label(class="form-label") }}</b>
+          {{ form.password(class="form-control", value=password, autocomplete="current-password") }}
+        </div>
+
+        <div class="row pt-3 align-items-center">
+          <div class="col-md-8">
+            <a class="forgot-password-link" href="{{ url_for('auth.reset_password') }}">
+              {% trans %}Forgot your password?{% endtrans %}
+            </a>
+          </div>
+
+          <div class="col-md-4">
+            {{ form.submit(class="btn btn-pokemon-yellow w-100") }}
+          </div>
+        </div>
+
+        {{ form.nonce() }}
+      </form>
+    {% endwith %}
   </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col offset-md-2 col-lg-6 offset-lg-3">
-        {% include "components/errors.html" %}
-
-        {% if integrations.mlc() %}
-          <a class="btn btn-secondary btn-lg btn-block w-100" href="{{ url_for('auth.oauth_login') }}">
-            Login with Major League Cyber
-          </a>
-
-          <hr>
-        {% endif %}
-
-        {% with form = Forms.auth.LoginForm() %}
-          <form method="post" accept-charset="utf-8">
-            <div class="mb-3">
-              <b>{{ form.name.label(class="form-label") }}</b>
-              {{ form.name(class="form-control", value=name, autocomplete="username email") }}
-            </div>
-
-            <div class="mb-3">
-              <b>{{ form.password.label(class="form-label") }}</b>
-              {{ form.password(class="form-control", value=password, autocomplete="current-password") }}
-            </div>
-
-            <div class="row pt-3">
-              <div class="col-6 col-md-8">
-                <a class="align-middle" href="{{ url_for('auth.reset_password') }}">
-                  {% trans %}Forgot your password?{% endtrans %}
-                </a>
-              </div>
-
-              <div class="col-6 col-md-4">
-                {{ form.submit(class="btn btn-block btn-primary w-100") }}
-              </div>
-            </div>
-
-            {{ form.nonce() }}
-          </form>
-        {% endwith %}
-      </div>
-    </div>
-  </div>
+</div>
 {% endblock %}

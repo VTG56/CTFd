@@ -296,7 +296,7 @@ def setup():
             with app.app_context():
                 cache.clear()
 
-            return redirect(url_for("views.static_html"))
+            return redirect(url_for("views.index"))
         try:
             return render_template("setup.html", state=serialize(generate_nonce()))
         except TemplateNotFound:
