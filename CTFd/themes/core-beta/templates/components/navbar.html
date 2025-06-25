@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
+    <a href="{{ url_for('views.static_html', route='') }}" class="navbar-brand">
       {% if Configs.ctf_logo %}
         <img
             class="img-responsive ctf_logo"
@@ -131,16 +131,21 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Logout{% endtrans %}">
-                <i class="fas fa-sign-out-alt d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-sign-out-alt pe-1"></i><span class="d-lg-none">
-                  {% trans %}Logout{% endtrans %}
+            <form method="post" action="{{ url_for('auth.logout') }}" class="d-inline">
+              <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+              <input type="hidden" name="csrf_token" value="{{ Session.nonce }}">
+              <button type="submit" class="nav-link border-0 bg-transparent" style="cursor: pointer;">
+                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Logout{% endtrans %}">
+                  <i class="fas fa-sign-out-alt d-none d-md-inline d-lg-none"></i>
                 </span>
-              </span>
-            </a>
+                <span class="d-sm-inline d-md-none d-lg-inline">
+                  <i class="fas fa-sign-out-alt pe-1"></i>
+                  <span class="d-lg-none">
+                    {% trans %}Logout{% endtrans %}
+                  </span>
+                </span>
+              </button>
+            </form>
           </li>
         {% else %}
 
@@ -170,40 +175,6 @@
             </a>
           </li>
         {% endif %}
-
-        <li class="nav-item dropdown">
-          <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-language d-none d-md-inline"></i>
-            <span class="d-sm-inline d-md-none">
-              <i class="fas fa-language pe-1"></i>
-              {% trans %}Change language{% endtrans %}
-            </span>
-          </button>
-          <form x-data="LanguageForm">
-            <ul class="dropdown-menu dropdown-menu-end">
-              {% set curr_lang = get_locale() %}
-              {%- for lang in Languages.names.items() %}
-              <li>
-                  <span class="dropdown-item {{ 'bg-primary text-white' if (curr_lang == lang[0]) }}" @click="set" value="{{ lang[0] }}">
-                    {{ lang[1] }}
-                  </span>
-              </li>
-              {%- endfor %}
-            </ul>
-          </form>
-        </li>
-
-        <li class="nav-item">
-          <button class="nav-link theme-switch" type="button">
-            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Toggle theme{% endtrans %}">
-              <i class="fas fa-sun d-none d-md-inline"></i>
-            </span>
-            <span class="d-sm-inline d-md-none">
-              <i class="fas fa-sun pe-1"></i>
-              {% trans %}Toggle theme{% endtrans %}
-            </span>
-          </button>
-        </li>
       </ul>
     </div>
   </div>

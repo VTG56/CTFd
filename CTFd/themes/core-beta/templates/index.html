@@ -209,10 +209,7 @@
                             </a>
                         {% else %}
                             <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-pokemon-yellow" style="min-width: 200px;">
-                                <i class="fas fa-user-plus me-2"></i> Join Now
-                            </a>
-                            <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-outline-light mt-3" style="min-width: 200px;">
-                                <i class="fas fa-sign-in-alt me-2"></i> Trainer Login
+                                <i class="fas fa-flag me-2"></i> Enter Arena
                             </a>
                         {% endif %}
                         <img src="{{ url_for('views.themes', path='img/Pikachu_hi_transparent.png') }}" alt="Pikachu" class="pikachu-image">

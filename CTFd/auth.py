@@ -595,8 +595,8 @@ def oauth_redirect():
         return redirect(url_for("auth.login"))
 
 
-@auth.route("/logout")
+@auth.route("/logout", methods=['GET', 'POST'])
 def logout():
     if current_user.authed():
         logout_user()
-    return redirect(url_for("views.static_html"))
+    return redirect('/')
