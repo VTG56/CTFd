@@ -71,8 +71,8 @@
     }
 
     .challenge-card.challenge-solved {
-        background: #e9ecef;
-        border-color: #6c757d;
+        background: var(--surface-elevated);
+        border-color: var(--accent-yellow);
     }
 
     .challenge-card-title {
@@ -107,48 +107,34 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: var(--accent-yellow);
+        font-weight: 800;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
     }
 
     .pokeball-icon {
-        position: relative;
-        width: 50px;
-        height: 50px;
-        background: #fff;
-        border: 3px solid var(--pokemon-blue);
-        border-radius: 50%;
-        overflow: hidden;
-        margin: 0 auto 10px auto;
+        width: 64px;
+        height: 64px;
+        background: url('{{ url_for("views.themes", path="img/Poké_Ball_icon..png") }}') center/contain no-repeat;
+        margin: 0 auto 15px auto;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     }
 
     .pokeball-icon::before {
-        content: '';
-        position: absolute;
-        top: -3px;
-        left: -3px;
-        right: -3px;
-        height: 22px;
-        background: #e74c3c;
-        border-bottom: 4px solid var(--pokemon-blue);
+        display: none;
     }
 
     .pokeball-icon::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 15px;
-        height: 15px;
-        background: #fff;
-        border: 3px solid var(--pokemon-blue);
-        border-radius: 50%;
-        z-index: 1;
+        display: none;
     }
 </style>
 {% endblock %}

@@ -14,9 +14,10 @@
         }
         
         .pokemon-hero {
-            background-color: #2c6cb3;
-            color: white;
+            background: url('{{ url_for("views.themes", path="img/Banner.png") }}') no-repeat center bottom / cover;
+            background-position: center bottom;
             min-height: 100vh;
+            max-height: 100vh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -89,18 +90,20 @@
             background-color: #ffcc00;
             color: #2c6cb3;
             border: 3px solid #2c6cb3;
-            padding: 0.8rem 2rem;
+            padding: 0.5rem 1.5rem;
             font-size: 1.2rem;
             border-radius: 30px;
             font-weight: bold;
             text-transform: uppercase;
             transition: all 0.3s ease;
             box-shadow: 0 4px 0 #d4a900;
-            font-family: inherit; /* Changed from 'Press Start 2P' to inherit from parent */
+            font-family: inherit;
         }
         
         .btn-pokemon-yellow:hover {
             background-color: #ffd633;
+            color: #ff0000;
+            border-color: #ff0000;
             transform: translateY(-2px);
             box-shadow: 0 6px 0 #d4a900;
         }
@@ -192,11 +195,11 @@
                 <div class="d-flex justify-content-center gap-3">
                     <div class="d-flex flex-column align-items-center">
                         {% if authed() %}
-                            <a href="{{ url_for('challenges.listing') }}" class="btn btn-lg btn-pokemon-yellow" style="min-width: 200px;">
+                            <a href="{{ url_for('challenges.listing') }}" class="btn btn-pokemon-yellow" style="min-width: 200px;">
                                 <i class="fas fa-flag me-2"></i> Enter Arena
                             </a>
                         {% else %}
-                            <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-pokemon-yellow" style="min-width: 200px;">
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-pokemon-yellow" style="min-width: 200px;">
                                 <i class="fas fa-flag me-2"></i> Enter Arena
                             </a>
                         {% endif %}

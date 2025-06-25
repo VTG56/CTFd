@@ -1,3 +1,134 @@
+<style>
+    /* Dark mode variables (fallback if parent page not loaded) */
+    :root {
+        --bg-dark-start: #000000;
+        --bg-dark-end: #101010;
+        --surface-dark: #1c1c1e;
+        --surface-elevated: #262628;
+        --text-primary: #e6e6e6;
+        --text-secondary: #a0a0a0;
+        --accent-yellow: #ffd733; /* Pikachu Yellow */
+        --accent-blue: #3B4CCA;   /* Pokémon Blue */
+        --accent-red: #E3350D;    /* Pokéball Red */
+        --card-shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background: var(--surface-dark);
+        color: var(--text-primary);
+        border: 2px solid var(--accent-blue);
+        border-radius: 12px;
+        box-shadow: 0 6px 20px var(--card-shadow);
+    }
+
+    .nav-tabs {
+        border-bottom: 1px solid var(--accent-blue);
+    }
+    .nav-tabs .nav-link {
+        color: var(--text-secondary);
+        background: transparent;
+        border: none;
+    }
+    .nav-tabs .nav-link.active {
+        color: var(--accent-yellow);
+        border-bottom: 3px solid var(--accent-yellow);
+    }
+
+    .challenge-name {
+        color: var(--accent-yellow);
+    }
+    .challenge-value {
+        color: var(--accent-red);
+    }
+    .challenge-tag {
+        background-color: var(--accent-blue);
+        color: var(--text-primary);
+        border-radius: 8px;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .challenge-input {
+        background: var(--surface-elevated);
+        border: 1px solid var(--accent-blue);
+        color: var(--text-primary);
+    }
+    .challenge-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .btn-outline-secondary {
+        border-color: var(--accent-blue);
+        color: var(--accent-yellow);
+    }
+    .btn-outline-secondary:hover {
+        background-color: var(--accent-blue);
+        color: var(--text-primary);
+    }
+
+    .btn-info, .btn-file {
+        background-color: var(--accent-blue) !important;
+        border: none;
+        color: var(--text-primary);
+    }
+
+    .alert-success {
+        background: #1f4520;
+        color: #b6ff9d;
+    }
+    .alert-info {
+        background: #203850;
+        color: #b6d4ff;
+    }
+    .alert-danger {
+        background: #4a1b1b;
+        color: #ffb3b3;
+    }
+    .alert-warning {
+        background: #50411f;
+        color: #ffe7a4;
+    }
+
+    .btn-pokemon-yellow {
+        background-color: #ffcc00;
+        color: #2c6cb3;
+        border: 3px solid #2c6cb3;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 0 #d4a900;
+    }
+    .btn-pokemon-yellow:hover {
+        background-color: #ffd633;
+        color: #ff0000;
+        border-color: #ff0000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 #d4a900;
+    }
+    
+    /* Apply same style to download button */
+    .btn-file {
+        background-color: #ffcc00 !important;
+        color: #2c6cb3 !important;
+        border: 3px solid #2c6cb3 !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 30px !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 0 #d4a900 !important;
+    }
+    .btn-file:hover {
+        background-color: #ffd633 !important;
+        color: #ff0000 !important;
+        border-color: #ff0000 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 0 #d4a900 !important;
+    }
+</style>
 <div :class="getStyles()" role="document" x-data="Challenge" x-init="id = {{ challenge.id }}; max_attempts = {{ max_attempts }}; attempts = {{ attempts }}">
   <div class="modal-content">
     <div class="modal-body py-4 px-4 px-sm-5">
@@ -145,7 +276,7 @@
                 {% block submit %}
                   <button
                       id="challenge-submit"
-                      class="challenge-submit btn btn-outline-secondary w-100 h-100" type="submit"
+                      class="btn btn-pokemon-yellow w-100 h-100" type="submit"
                       @click.debounce.500ms="submitChallenge()"
                   >
                     {% trans %}Submit{% endtrans %}
