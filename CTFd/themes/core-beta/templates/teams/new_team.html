@@ -1,40 +1,156 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+  @keyframes zoomIn {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+  
+  .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: 100%;
+    background: url('{{ url_for("views.themes", path="img/Banner.png") }}') no-repeat center bottom;
+    background-size: cover;
+    opacity: 0.2;
+  }
+  
+  .content-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+  :root {
+    --pokemon-yellow: #ffcc00;
+    --pokemon-blue: #2c6cb3;
+  }
+
+  body {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  .jumbotron {
+    background-color: transparent !important;
+    border-bottom: 3px solid var(--pokemon-yellow);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .container h1 {
+    color: var(--pokemon-yellow);
+    text-shadow: 2px 2px 4px var(--pokemon-blue);
+    font-weight: bold;
+  }
+
+  .themed-container {
+    background-color: rgba(44, 108, 179, 0.2);
+    border: 2px solid var(--pokemon-yellow);
+    border-radius: 15px;
+    padding: 2rem;
+  }
+
+  .themed-container p {
+      color: #fff;
+  }
+
+  .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--pokemon-blue);
+    color: #fff;
+  }
+
+  .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--pokemon-yellow);
+    color: #fff;
+    box-shadow: 0 0 10px var(--pokemon-yellow);
+  }
+
+  .form-label {
+    color: var(--pokemon-yellow);
+  }
+
+  .btn-success {
+    background-color: var(--pokemon-yellow);
+    border-color: var(--pokemon-blue);
+    color: var(--pokemon-blue);
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .btn-success:hover {
+    background-color: var(--pokemon-blue);
+    border-color: var(--pokemon-yellow);
+    color: var(--pokemon-yellow);
+    transform: scale(1.05);
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+  <div class="background-container">
+    <div class="background-image"></div>
+  </div>
+  <div class="content-wrapper">
   <div class="jumbotron">
     <div class="container">
       <h1>{% trans %}Create Team{% endtrans %}</h1>
     </div>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        {% include "components/errors.html" %}
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <!-- Charizard on the left -->
+      <div class="col-md-3 d-none d-md-block text-center">
+        <img src="{{ url_for('views.themes', path='img/Charizard.png') }}" alt="Charizard" class="img-fluid" style="max-height: 300px;">
+      </div>
+      
+      <!-- Main content in the center -->
+      <div class="col-md-6">
+        <div class="themed-container">
+          {% include "components/errors.html" %}
 
-        {% with form = Forms.teams.TeamRegisterForm() %}
-          {% from "macros/forms.html" import render_extra_fields %}
-          <form method="POST">
-            <div class="mb-3">
-              <b>{{ form.name.label(class="form-label") }}</b>
-              {{ form.name(class="form-control") }}
-            </div>
-            <div class="mb-3">
-              <b>{{ form.password.label(class="form-label") }}</b>
-              {{ form.password(class="form-control") }}
-            </div>
-
-            {{ render_extra_fields(form.extra) }}
-
-            <div class="row ">
-              <div class="col-md-12">
-                <p>After creating your team, share the team name and password with your teammates so they can join your
-                  team.</p>
-                {{ form.submit(class="btn btn-success float-end px-4") }}
+          {% with form = Forms.teams.TeamRegisterForm() %}
+            {% from "macros/forms.html" import render_extra_fields %}
+            <form method="POST">
+              <div class="mb-3">
+                <b>{{ form.name.label(class="form-label") }}</b>
+                {{ form.name(class="form-control") }}
               </div>
-            </div>
-            {{ form.nonce() }}
-          </form>
-        {% endwith %}
+              <div class="mb-3">
+                <b>{{ form.password.label(class="form-label") }}</b>
+                {{ form.password(class="form-control") }}
+              </div>
+
+              {{ render_extra_fields(form.extra) }}
+
+              <div class="row ">
+                <div class="col-md-12">
+                  <p>After creating your team, share the team name and password with your teammates so they can join your
+                    team.</p>
+                  {{ form.submit(class="btn btn-success float-end px-4") }}
+                </div>
+              </div>
+              {{ form.nonce() }}
+            </form>
+          {% endwith %}
+        </div>
+      </div>
+      
+      <!-- Blastoise on the right -->
+      <div class="col-md-3 d-none d-md-block text-center">
+        <img src="{{ url_for('views.themes', path='img/Blastoise.png') }}" alt="Blastoise" class="img-fluid" style="max-height: 300px;">
+      </div>
       </div>
     </div>
   </div>
