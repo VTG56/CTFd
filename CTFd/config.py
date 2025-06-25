@@ -5,6 +5,9 @@ from typing import Union
 
 from sqlalchemy.engine.url import URL
 
+PLUGINS = [
+    "CTFd.plugins.team_hashed_flag"
+]
 
 class EnvInterpolation(configparser.BasicInterpolation):
     """Interpolation which expands environment variables in values."""

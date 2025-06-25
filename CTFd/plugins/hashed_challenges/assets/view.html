@@ -1,0 +1,60 @@
+<div class="challenge-view">
+    <div class="challenge-description">
+        {{ challenge.description | safe }}
+    </div>
+    
+    <div class="hash-generator mt-4 p-3 border rounded bg-light">
+        <h5>🔐 Team Hash Generator</h5>
+        <p class="text-muted">Enter your answer to generate your team-specific hash:</p>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="raw-answer" placeholder="Enter your answer">
+            <button class="btn btn-primary" onclick="generateHash()">Generate Hash</button>
+        </div>
+        <div id="hash-result"></div>
+    </div>
+</div>
+
+<script>
+async function generateHash() {
+    const answer = document.getElementById('raw-answer').value.trim();
+    if (!answer) {
+        alert('Please enter an answer first!');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/v1/teams/me');
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+            const teamName = data.data.name;
+            const combined = answer + teamName;
+            
+            const encoder = new TextEncoder();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(combined));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            document.getElementById('hash-result').innerHTML = 
+                `<div class="alert alert-success">
+                    <strong>Your Team Hash:</strong><br>
+                    <code style="word-break: break-all; font-size: 0.9em;">${hashHex}</code><br>
+                    <button class="btn btn-sm btn-outline-primary mt-2" onclick="copyToClipboard('${hashHex}')">
+                        📋 Copy Hash
+                    </button>
+                </div>`;
+        } else {
+            alert('Please make sure you are logged in as part of a team!');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to generate hash. Please check your connection and login status.');
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Hash copied to clipboard! Paste it in the submission box.');
+    });
+}
+</script>
