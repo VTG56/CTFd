@@ -385,14 +385,26 @@ def settings():
     )
 
 
-@views.route("/", defaults={"route": "index"})
+@views.route("/")
+def index():
+    """
+    This function is now dedicated to showing our beautiful, custom-themed
+    index.html page directly. It's the grand entrance to our Hackamon League!
+    """
+    return render_template("index.html")
+
+
+# 2. MODIFIED: This route now handles all OTHER dynamic pages.
 @views.route("/<path:route>")
 def static_html(route):
     """
-    Route in charge of routing users to Pages.
-    :param route:
-    :return:
+    This route now handles any dynamically created pages from the Admin Panel,
+    like /rules or /faq, but it no longer handles the homepage.
     """
+    # Just in case a user manually types /index, we redirect them to the proper root URL.
+    if route.lower() == "index":
+        return redirect(url_for("views.index"))
+        
     page = get_page(route)
     if page is None:
         abort(404)
@@ -400,6 +412,7 @@ def static_html(route):
         if page.auth_required and authed() is False:
             return redirect(url_for("auth.login", next=request.full_path))
 
+        # This part remains the same, rendering generic pages.
         return render_template("page.html", content=page.html, title=page.title)
 
 

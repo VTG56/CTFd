@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/fonts.css') }}">
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/main.css') }}">
 	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/core.css') }}">
+	<link rel="stylesheet" href="{{ url_for('views.themes', path='css/pokemon-fonts.css') }}">
 	{% block stylesheets %}
 	{% endblock %}
 
@@ -37,13 +38,18 @@
 		{% endblock %}
 	</main>
 
-	<footer class="footer">
+	<footer class="footer mt-auto py-3">
 		<div class="container text-center">
-			<a href="https://ctfd.io" class="text-secondary">
-				<small class="text-muted">Powered by CTFd</small>
+			<div class="pokemon-divider"></div>
+			<a href="https://ctfd.io" class="text-secondary text-decoration-none">
+				<small class="text-muted">
+					<span class="pokemon-text">Powered by CTFd</span>
+					<img src="{{ url_for('views.themes', path='img/pokeball-small.png') }}" alt="Poké Ball" class="ms-2" style="height: 16px;">
+				</small>
 			</a>
 		</div>
 	</footer>
+	</div> <!-- Close pokemon-container -->
 
 	<script defer src="{{ url_for('views.themes', path='js/vendor.bundle.js') }}"></script>
 	<script defer src="{{ url_for('views.themes', path='js/core.js') }}"></script>
