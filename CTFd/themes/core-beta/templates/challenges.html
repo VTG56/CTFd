@@ -3,83 +3,96 @@
 {% block stylesheets %}
 {{ super() }}
 <style>
-:root {
-        --bg-dark-start: #000000;
-        --bg-dark-end: #101010;
-        --surface-dark: #1c1c1e;
-        --surface-elevated: #262628;
-        --text-primary: #e6e6e6;
-        --text-secondary: #a0a0a0;
-        --accent-yellow: #ffd733; /* Bright Pikachu yellow */
-        --accent-blue: #3B4CCA;   /* Pokémon Blue */
-        --accent-red: #E3350D;    /* Pokéball Red */
+    :root {
+        --bg-dark-start: #0d1117;
+        --bg-dark-end: #010409;
+        --surface-dark: #161b22;
+        --surface-elevated: #21262d;
+        --text-primary: #e6edf3;
+        --text-secondary: #8b949e;
+        --accent-yellow: #ffd733;
+        --accent-blue: #3B4CCA;
+        --accent-red: #E3350D;
+        --card-border: #30363d;
         --card-shadow: rgba(0, 0, 0, 0.4);
     }
 
+    @keyframes pokeball-wobble {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        75% { transform: rotate(-10deg); }
+    }
+
     body {
-        background: linear-gradient(to bottom, var(--bg-dark-start) 0%, var(--bg-dark-end) 100%);
+        background: var(--bg-dark-end);
         color: var(--text-primary);
     }
 
     .jumbotron {
-        background: var(--surface-elevated);
+        background: linear-gradient(145deg, var(--accent-blue) 0%, #1a2a6c 100%);
         color: var(--accent-yellow);
-        padding: 2rem 1rem;
-        border-bottom: 4px solid var(--accent-blue);
-        margin-bottom: 2rem;
-        border-radius: 0;
-        box-shadow: 0 2px 8px var(--card-shadow);
+        padding: 3rem 1rem;
+        border-bottom: 5px solid var(--accent-yellow);
+        margin-bottom: 3rem;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
 
-    .jumbotron h1,
-    .jumbotron .h1 {
+    .jumbotron h1 {
         font-family: 'Pokemon Solid', sans-serif;
-        font-weight: bold;
         color: var(--accent-yellow);
-        text-shadow:
-          0 0 6px var(--accent-blue),
-          0 0 12px var(--accent-blue);
+        font-size: 3.5rem;
+        text-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
     }
 
-    .pokemon-font {
-        font-family: 'Pokemon Solid', sans-serif;
+    .jumbotron p {
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
     .category-header h3 {
+        font-family: 'Pokemon Solid', sans-serif;
         color: var(--accent-yellow);
-        font-weight: bold;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
+        border-bottom: 2px solid var(--accent-blue);
+        display: inline-block;
+        padding-bottom: 0.5rem;
     }
 
     .challenge-card {
         background: var(--surface-dark);
-        border: 3px solid var(--accent-blue);
+        border: 2px solid var(--accent-blue);
         border-radius: 12px;
-        padding: 1.5rem;
         text-align: center;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         cursor: pointer;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 3px 6px var(--card-shadow);
+        box-shadow: 0 4px 10px var(--card-shadow);
         color: var(--text-primary);
     }
 
     .challenge-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 6px 12px var(--card-shadow);
+        transform: translateY(-8px);
+        border-color: var(--accent-red);
+        box-shadow: 0 8px 20px rgba(227, 53, 13, 0.4);
     }
 
     .challenge-card.challenge-solved {
-        background: var(--surface-elevated);
         border-color: var(--accent-yellow);
+        box-shadow: 0 0 15px rgba(255, 215, 51, 0.3);
+    }
+
+    .challenge-inner {
+        padding: 1.5rem;
     }
 
     .challenge-card-title {
         font-size: 1.4rem;
         font-weight: bold;
-        color: var(--accent-yellow);
-        margin-bottom: 0.4rem;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
     }
 
     .challenge-card-cp {
@@ -88,53 +101,51 @@
         color: var(--accent-red);
     }
 
-    .challenge-card-category {
-        display: inline-block;
-        padding: 0.25rem 1rem;
-        border-radius: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 0.75rem;
+    .pokemon-sprite-container {
         margin-top: 1rem;
-        background-color: var(--accent-blue);
-        color: var(--text-primary);
-        color: var(--pokemon-yellow);
     }
 
-    .challenge-solved .solved-overlay {
+    .pokemon-sprite {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        image-rendering: pixelated; /* Retro sprite look */
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+
+    .solved-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(22, 27, 34, 0.85);
+        backdrop-filter: blur(5px);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         color: var(--accent-yellow);
-        font-weight: 800;
-        font-size: 1.5rem;
-        text-transform: uppercase;
+        font-size: 1.8rem;
+        font-family: 'Pokemon Solid', sans-serif;
         letter-spacing: 2px;
-        text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        text-shadow: 0 0 8px rgba(0,0,0,0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .challenge-solved .solved-overlay {
+        opacity: 1;
     }
 
     .pokeball-icon {
-        width: 64px;
-        height: 64px;
+        width: 70px;
+        height: 70px;
         background: url('{{ url_for("views.themes", path="img/Poke_Ball..png") }}') center/contain no-repeat;
-        margin: 0 auto 15px auto;
-        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 0 10px rgba(255, 215, 51, 0.7));
     }
 
-    .pokeball-icon::before {
-        display: none;
-    }
-
-    .pokeball-icon::after {
-        display: none;
+    .challenge-solved:hover .pokeball-icon {
+        animation: pokeball-wobble 0.8s ease-in-out;
     }
 </style>
 {% endblock %}
@@ -180,7 +191,9 @@
                                     <div class="challenge-inner">
                                         <h4 class="challenge-card-title" x-text="c.name"></h4>
                                         <p class="challenge-card-cp">CP <span x-text="c.value"></span></p>
-                                        <span class="challenge-card-category" x-text="c.category"></span>
+                                                                                <div x-data="{ pokemonId: Math.floor(Math.random() * 898) + 1 }" class="pokemon-sprite-container">
+                                            <img :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`" alt="Random Pokémon" class="pokemon-sprite">
+                                        </div>
                                     </div>
                                     <div x-show="c.solved_by_me" class="solved-overlay">
                                         <div class="pokeball-icon"></div>

@@ -5,19 +5,22 @@
 <style>
     :root {
         --pokemon-yellow: #ffcc00;
-        --pokemon-blue: #2c6cb3;
-        --card-bg: rgba(255, 255, 255, 0.95);
-        --card-border: #2c6cb3;
-        --card-shadow: rgba(0, 0, 0, 0.15);
+        --pokemon-blue: #3B4CCA;
+        --card-bg: rgba(30, 30, 35, 0.95);
+        --card-border: #3B4CCA;
+        --card-shadow: rgba(0, 0, 0, 0.3);
+        --text-primary: #e6e6e6;
+        --text-secondary: #a0a0a0;
     }
 
     .jumbotron {
-        background-color: var(--pokemon-blue);
+        background: linear-gradient(135deg, #1a2a6c 0%, #3B4CCA 100%);
         color: var(--pokemon-yellow);
         padding: 2rem 1rem;
         border-bottom: 5px solid var(--pokemon-yellow);
         margin-bottom: 2rem;
         border-radius: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .jumbotron h1,
@@ -33,35 +36,53 @@
 
     .oak-message-card {
         background: var(--card-bg);
-        border: 3px solid var(--card-border);
+        border: 2px solid var(--card-border);
         border-radius: 15px;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 12px var(--card-shadow);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         padding: 1.5rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .oak-message-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
     .oak-message-card .card-title {
         font-family: 'Pokemon Solid', sans-serif;
-        color: var(--pokemon-blue);
+        color: var(--pokemon-yellow);
         font-size: 1.8rem;
-        border-bottom: 2px solid var(--pokemon-yellow);
+        border-bottom: 2px solid var(--pokemon-blue);
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     }
 
     .oak-message-card .card-body p {
         font-size: 1.1rem;
         line-height: 1.6;
+        color: var(--text-primary);
+    }
+    
+    .oak-message-card .card-body a {
+        color: var(--pokemon-yellow);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .oak-message-card .card-body a:hover {
+        text-decoration: underline;
     }
 
     .oak-message-card .card-footer {
         background: transparent;
-        border-top: 1px solid #e0e0e0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-top: 1rem;
         margin-top: 1rem;
         text-align: right;
         font-style: italic;
-        color: #6c757d;
+        color: var(--text-secondary);
     }
 </style>
 {% endblock %}
@@ -76,8 +97,8 @@
 <div class="container">
     {% if not notifications %}
     <div class="text-center py-5">
-        <h2 class="pokemon-font">No new messages!</h2>
-        <p class="lead text-muted">The Professor is busy with his research. Check back later!</p>
+        <h2 class="pokemon-font" style="color: var(--pokemon-yellow);">No new messages!</h2>
+        <p class="lead" style="color: var(--text-secondary);">The Professor is busy with his research. Check back later!</p>
     </div>
     {% endif %}
     {% for notification in notifications %}

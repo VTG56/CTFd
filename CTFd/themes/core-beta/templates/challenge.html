@@ -1,133 +1,153 @@
 <style>
-    /* Dark mode variables (fallback if parent page not loaded) */
     :root {
-        --bg-dark-start: #000000;
-        --bg-dark-end: #101010;
-        --surface-dark: #1c1c1e;
-        --surface-elevated: #262628;
-        --text-primary: #e6e6e6;
-        --text-secondary: #a0a0a0;
-        --accent-yellow: #ffd733; /* Pikachu Yellow */
-        --accent-blue: #3B4CCA;   /* Pokémon Blue */
-        --accent-red: #E3350D;    /* Pokéball Red */
-        --card-shadow: rgba(0, 0, 0, 0.4);
+        --surface-dark: #161b22;
+        --surface-elevated: #21262d;
+        --text-primary: #e6edf3;
+        --text-secondary: #8b949e;
+        --accent-yellow: #ffd733;
+        --accent-blue: #3B4CCA;
+        --accent-red: #E3350D;
+        --border-color: #30363d;
+        --success-glow: rgba(31, 136, 61, 0.6);
+        --danger-glow: rgba(248, 81, 73, 0.6);
     }
 
     .modal-content {
         background: var(--surface-dark);
         color: var(--text-primary);
-        border: 2px solid var(--accent-blue);
-        border-radius: 12px;
-        box-shadow: 0 6px 20px var(--card-shadow);
+        border: 2px solid var(--border-color);
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
     }
 
     .nav-tabs {
-        border-bottom: 1px solid var(--accent-blue);
+        border-bottom: 2px solid var(--border-color);
+        padding: 0 0.5rem;
     }
     .nav-tabs .nav-link {
         color: var(--text-secondary);
         background: transparent;
         border: none;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        transition: color 0.2s ease;
     }
     .nav-tabs .nav-link.active {
         color: var(--accent-yellow);
+        background: transparent;
         border-bottom: 3px solid var(--accent-yellow);
+    }
+    .nav-tabs .nav-link:hover {
+        color: var(--text-primary);
     }
 
     .challenge-name {
+        font-family: 'Pokemon Solid', sans-serif;
         color: var(--accent-yellow);
+        font-size: 2.2rem;
+        text-shadow: 0 0 8px rgba(0,0,0,0.7);
     }
     .challenge-value {
+        font-family: 'Pokemon Solid', sans-serif;
         color: var(--accent-red);
+        font-size: 1.5rem;
+        margin-top: -0.5rem;
     }
     .challenge-tag {
         background-color: var(--accent-blue);
         color: var(--text-primary);
-        border-radius: 8px;
-        padding: 0.2rem 0.6rem;
+        border-radius: 15px;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .challenge-desc {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin: 1.5rem 0;
     }
 
     .challenge-input {
         background: var(--surface-elevated);
-        border: 1px solid var(--accent-blue);
+        border: 2px solid var(--border-color);
         color: var(--text-primary);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .challenge-input::placeholder {
-        color: var(--text-secondary);
-    }
-
-    .btn-outline-secondary {
+    .challenge-input:focus {
         border-color: var(--accent-blue);
-        color: var(--accent-yellow);
-    }
-    .btn-outline-secondary:hover {
-        background-color: var(--accent-blue);
-        color: var(--text-primary);
-    }
-
-    .btn-info, .btn-file {
-        background-color: var(--accent-blue) !important;
-        border: none;
-        color: var(--text-primary);
-    }
-
-    .alert-success {
-        background: #1f4520;
-        color: #b6ff9d;
-    }
-    .alert-info {
-        background: #203850;
-        color: #b6d4ff;
-    }
-    .alert-danger {
-        background: #4a1b1b;
-        color: #ffb3b3;
-    }
-    .alert-warning {
-        background: #50411f;
-        color: #ffe7a4;
+        box-shadow: 0 0 10px rgba(59, 76, 202, 0.5);
+        outline: none;
     }
 
     .btn-pokemon-yellow {
         background-color: #ffcc00;
         color: #2c6cb3;
         border: 3px solid #2c6cb3;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1.5rem;
         font-size: 1.2rem;
         border-radius: 30px;
         font-weight: bold;
         text-transform: uppercase;
         transition: all 0.3s ease;
         box-shadow: 0 4px 0 #d4a900;
+        font-family: 'Press Start 2P', cursive;
+        text-decoration: none;
+        cursor: pointer;
     }
+    
     .btn-pokemon-yellow:hover {
         background-color: #ffd633;
-        color: #ff0000;
-        border-color: #ff0000;
+        color: var(--accent-red) !important;
+        border-color: var(--accent-red);
         transform: translateY(-2px);
         box-shadow: 0 6px 0 #d4a900;
     }
     
-    /* Apply same style to download button */
-    .btn-file {
-        background-color: #ffcc00 !important;
-        color: #2c6cb3 !important;
-        border: 3px solid #2c6cb3 !important;
-        padding: 0.5rem 1rem !important;
-        font-size: 1rem !important;
-        border-radius: 30px !important;
-        font-weight: bold !important;
-        text-transform: uppercase;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 0 #d4a900 !important;
+    .btn-pokemon-yellow:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 #d4a900;
     }
-    .btn-file:hover {
-        background-color: #ffd633 !important;
-        color: #ff0000 !important;
-        border-color: #ff0000 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 0 #d4a900 !important;
+
+    /* Hints */
+    details {
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
     }
+    summary {
+        padding: 0.75rem 1.25rem;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary:after {
+        content: '\25B6'; /* Play icon */
+        font-size: 0.8rem;
+        transition: transform 0.2s ease;
+    }
+    details[open] summary:after {
+        transform: rotate(90deg);
+    }
+    details > div {
+        padding: 0 1.25rem 1rem 1.25rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 0.5rem;
+    }
+
+
 </style>
 <div :class="getStyles()" role="document" x-data="Challenge" x-init="id = {{ challenge.id }}; max_attempts = {{ max_attempts }}; attempts = {{ attempts }}">
   <div class="modal-content">
@@ -236,7 +256,7 @@
                       {% set filename = segments | last %}
                     {% endif %}
                     <a
-                        class="btn btn-info btn-file mb-1 d-inline-block px-2 w-100 text-truncate"
+                        class="btn btn-pokemon-yellow mb-1 d-inline-block px-2 w-100 text-truncate"
                         href="{{ file }}"
                         title="{{ filename }}"
                     >
@@ -275,8 +295,7 @@
               <div class="col-12 col-sm-4 mt-3 mt-sm-0 key-submit">
                 {% block submit %}
                   <button
-                      id="challenge-submit"
-                      class="btn btn-pokemon-yellow w-100 h-100" type="submit"
+                      id="challenge-submit" class="challenge-submit btn btn-pokemon-yellow w-100 h-100" type="submit"
                       @click.debounce.500ms="submitChallenge()"
                   >
                     {% trans %}Submit{% endtrans %}
@@ -300,13 +319,13 @@
                     <strong x-text="response.data.message"></strong>
                     <div x-show="(response.data.status == 'correct' || response.data.status == 'already_solved')">
                       <div x-show="getNextId()">
-                        <button @click="nextChallenge()" class="btn btn-info mt-3">
+                        <button @click="nextChallenge()" class="btn btn-pokemon-yellow mt-3">
                           {% trans %}Next Challenge{% endtrans %}
                         </button>
                       </div>
                       {% if Configs.social_shares %}
                       <div>
-                        <button x-show="!share_url" @click="getShareUrl()" class="btn btn-sm btn-outline-info mt-3">
+                        <button x-show="!share_url" @click="getShareUrl()" class="btn btn-pokemon-yellow btn-sm mt-3">
                           {% trans %}Share{% endtrans %}
                         </button>
                         <div class="btn-group mt-3" role="group" x-show="share_url">
