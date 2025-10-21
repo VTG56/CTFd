@@ -19,62 +19,54 @@
         --text-primary: #e6edf3;
         --text-secondary: #8b949e;
         --accent-yellow: #ffd700;
-        --accent-blue: #3B4CCA;
-        --accent-red: #ff0000;
+        --accent-red: #ff4500;
+        --accent-orange: #ff6b35;
         --card-border: #30363d;
         --card-shadow: rgba(0, 0, 0, 0.4);
-    }
-
-    @keyframes jollyroger-wave {
-        0%, 100% { transform: rotate(0deg); }
-        25% { transform: rotate(10deg); }
-        75% { transform: rotate(-10deg); }
     }
 
     body {
         background: var(--bg-dark-end);
         color: var(--text-primary);
+        overflow-x: hidden; /* no horizontal scroll */
+        margin: 0;
+        font-family: 'Arial', sans-serif;
     }
 
     .jumbotron {
-        background: linear-gradient(145deg, #dc143c 0%, #8b0000 100%);
-        color: var(--accent-yellow);
-        padding: 3rem 1rem;
-        border-bottom: 5px solid var(--accent-red);
-        margin-bottom: 3rem;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
+    background: linear-gradient(145deg, #8b0000 0%, #500000 100%);
+    color: #ffd700;
+    padding: 2.5rem 1rem;
+    border-bottom: 3px solid #ff6b35;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
 
-    .jumbotron h1 {
-        font-family: 'One Piece Font', sans-serif;
-        color: #ffd700;
-        font-size: 3.5rem;
-        text-shadow: 
-            3px 3px 0 #ff0000,
-            6px 6px 0 #000000;
-    }
+.jumbotron h1 {
+    font-family: 'One Piece Font', sans-serif;
+    font-size: 4rem;
+    text-shadow: 2px 2px 0 #8b0000, 4px 4px 0 #000;
+}
 
-    .jumbotron p {
-        color: var(--text-primary);
-        font-size: 1.25rem;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    }
+.jumbotron p {
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
 
     .category-header h3 {
         font-family: 'One Piece Font', sans-serif;
-        color: #ffd700;
+        color: var(--accent-yellow);
         letter-spacing: 1.5px;
-        border-bottom: 2px solid #ff6b35;
+        border-bottom: 2px solid var(--accent-orange);
         display: inline-block;
         padding-bottom: 0.5rem;
-        text-shadow: 2px 2px 0 #dc143c, 4px 4px 0 #000000;
+        text-shadow: 2px 2px 0 var(--accent-red), 4px 4px 0 #000;
     }
 
     .challenge-card {
         background: var(--surface-dark);
         border: 3px solid #cbcbcb;
-        border-radius: 12px;
+        border-radius: 15px;
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         cursor: pointer;
@@ -86,7 +78,7 @@
 
     .challenge-card:hover {
         transform: translateY(-8px);
-        border-color: #ff6b35;
+        border-color: var(--accent-orange);
         box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
     }
 
@@ -102,7 +94,6 @@
     .challenge-card-title {
         font-size: 1.4rem;
         font-weight: bold;
-        color: var(--text-primary);
         margin-bottom: 0.5rem;
     }
 
@@ -111,8 +102,6 @@
         font-weight: bold;
         color: #cbcbcb;
     }
-
-
 
     .solved-overlay {
         position: absolute;
@@ -123,11 +112,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #ffd700;
+        color: var(--accent-yellow);
         font-size: 1.8rem;
         font-family: 'One Piece Font', sans-serif;
         letter-spacing: 2px;
-        text-shadow: 2px 2px 0 #dc143c, 4px 4px 0 #000000;
+        text-shadow: 2px 2px 0 var(--accent-red), 4px 4px 0 #000;
         opacity: 0;
         transition: opacity 0.3s ease;
     }

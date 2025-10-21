@@ -12,63 +12,69 @@
     }
 
     :root {
-        --onepiece-gold: #ffd700;
-        --onepiece-orange: #ff6b35;
-        --onepiece-red: #dc143c;
-        --card-bg: rgba(30, 30, 35, 0.95);
+        --gold: #ffd700;
+        --orange: #ff8c42;
+        --red: #dc143c;
+        --dark-bg: #10121a;
+        --card-bg: rgba(25, 25, 35, 0.95);
         --card-border: #ff6b35;
-        --card-shadow: rgba(0, 0, 0, 0.3);
-        --text-primary: #e6e6e6;
-        --text-secondary: #a0a0a0;
+        --text-primary: #e0e0e0;
+        --text-secondary: #999999;
+        --shadow-dark: rgba(0,0,0,0.5);
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        font-family: 'Arial', sans-serif;
     }
 
     .jumbotron {
-        background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
-        color: var(--onepiece-gold);
-        padding: 2rem 1rem;
-        border-bottom: 5px solid var(--onepiece-orange);
-        margin-bottom: 2rem;
-        border-radius: 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(145deg, #8b0000, #dc143c);
+        color: var(--gold);
+        padding: 3rem 1rem;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px var(--shadow-dark);
+        margin-bottom: 3rem;
     }
 
-    .jumbotron h1,
-    .jumbotron .h1 {
+    .jumbotron h1 {
         font-family: 'One Piece Font', sans-serif;
-        font-weight: bold;
-        text-shadow: 
-            3px 3px 0 #ff6b35,
-            6px 6px 0 #000000;
-        color: #ffd700;
+        font-size: 3rem;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #ff6b35, 4px 4px 0 #000;
     }
 
-    .onepiece-font {
-        font-family: 'One Piece Font', sans-serif;
+    .jumbotron p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
     }
 
-    .message-card {
+    .news-card {
         background: var(--card-bg);
         border: 2px solid var(--card-border);
-        border-radius: 15px;
+        border-radius: 20px;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 18px var(--shadow-dark);
         padding: 1.5rem;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.25s, box-shadow 0.25s;
     }
-    
+
     .news-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px var(--shadow-dark);
     }
 
     .news-card .card-title {
         font-family: 'One Piece Font', sans-serif;
-        color: #ffd700;
-        font-size: 1.8rem;
-        border-bottom: 2px solid #ff6b35;
+        color: var(--orange);
+        font-size: 1.9rem;
+        border-bottom: 2px solid var(--gold);
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
-        text-shadow: 2px 2px 0 #dc143c, 4px 4px 0 #000000;
+        text-shadow: 1px 1px 0 #000, 2px 2px 0 #dc143c;
     }
 
     .news-card .card-body p {
@@ -76,43 +82,60 @@
         line-height: 1.6;
         color: var(--text-primary);
     }
-    
+
     .news-card .card-body a {
-        color: var(--onepiece-gold);
+        color: var(--gold);
         text-decoration: none;
-        font-weight: 500;
+        font-weight: bold;
     }
-    
+
     .news-card .card-body a:hover {
         text-decoration: underline;
     }
 
     .news-card .card-footer {
         background: transparent;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255,255,255,0.1);
         padding-top: 1rem;
-        margin-top: 1rem;
         text-align: right;
         font-style: italic;
         color: var(--text-secondary);
     }
+
+    .news-card .message-content {
+        max-height: 350px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .news-card .message-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .news-card .message-content::-webkit-scrollbar-thumb {
+        background-color: var(--orange);
+        border-radius: 3px;
+    }
+
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <h1 class="onepiece-font">News from the Seas</h1>
-        <p class="lead">Important updates from the Grand Line!</p>
+        <h1 class="onepiece-font">Seas of News</h1>
+        <p class="lead">Stay updated with the latest bounty alerts and events!</p>
     </div>
 </div>
+
 <div class="container">
     {% if not notifications %}
     <div class="text-center py-5">
-        <h2 class="onepiece-font" style="color: var(--onepiece-gold);">No new messages!</h2>
-        <p class="lead" style="color: var(--text-secondary);">The seas are calm. Check back later for news!</p>
+        <h2 class="onepiece-font" style="color: var(--gold);">All calm seas!</h2>
+        <p class="lead" style="color: var(--text-secondary);">No new messages yet. Sail back later for updates.</p>
     </div>
     {% endif %}
+
     {% for notification in notifications %}
     <div class="news-card">
         <div class="card-body">
@@ -132,4 +155,3 @@
 {% block scripts %}
   {{ Assets.js("assets/js/notifications.js") }}
 {% endblock %}
-

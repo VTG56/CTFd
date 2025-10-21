@@ -1,225 +1,252 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  {{ super() }}
-  <style>
+{{ super() }}
+<style>
+    body {
+        background: linear-gradient(to bottom, #0b0c10, #1f2833);
+        color: #f0e6d2;
+        font-family: 'Arial', sans-serif;
+    }
+
     .users-container {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
+        padding: 4rem 2rem;
+        background: url('{{ url_for("views.themes", path="img/wood-texture.png") }}') repeat;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
     }
+
     .users-title {
-      color: #ffd700;
-      text-shadow: 3px 3px 0 #dc143c, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 2.5rem;
-      font-weight: bold;
+        font-size: 2.8rem;
+        color: #ffdd55;
+        text-shadow: 2px 2px 0 #8b0000, -1px -1px 2px #000;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-family: 'One Piece Font', sans-serif;
     }
+
     .pirate-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 15px;
-      border: 4px solid #ff6b35;
+        max-width: 90%;
+        border-radius: 20px;
+        border: 4px solid #ff6b35;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+        margin-bottom: 2rem;
+        transform: rotate(-2deg);
     }
+
     .search-form .form-select,
     .search-form .form-control {
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 3px solid #ff6b35;
-      border-radius: 8px;
-      color: #8b0000;
-      font-weight: bold;
+        background-color: rgba(255,255,255,0.95);
+        border: 3px solid #ff6b35;
+        border-radius: 12px;
+        font-weight: bold;
+        color: #8b0000;
+        transition: all 0.3s ease;
     }
+
     .search-form .form-select:focus,
     .search-form .form-control:focus {
-      background-color: white;
-      border-color: #ff6b35;
-      box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+        box-shadow: 0 0 10px #ff6b35;
+        outline: none;
+        transform: scale(1.02);
     }
+
     .btn-onepiece-orange {
-      background-color: #ff6b35;
-      color: #fff;
-      border: 3px solid #000;
-      padding: 0.5rem 1rem;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 0 #c44520;
+        background-color: #ff6b35;
+        color: #fff;
+        border: 3px solid #000;
+        border-radius: 40px;
+        padding: 0.6rem 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 0 #c44520;
     }
+
     .btn-onepiece-orange:hover {
-      background-color: #ff8c5e;
-      color: #ffd700;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 #c44520;
+        transform: translateY(-3px) scale(1.05);
+        background-color: #ff8c5e;
+        color: #ffdd55;
+        box-shadow: 0 8px 0 #c44520;
     }
+
     .table-themed {
-      background-color: rgba(139, 0, 0, 0.95);
-      color: #fff;
-      border: 4px solid #ff6b35;
-      border-radius: 15px;
-    }
-    .table-themed thead th {
-      color: #ffd700;
-      border-bottom: 2px solid #ff6b35;
-    }
-    .table-themed tbody tr {
-      border-color: #ff6b35;
-    }
-    .table-themed tbody tr:hover {
-      background-color: rgba(180, 0, 0, 0.95);
-    }
-    .table-themed a {
-      color: #ffd700;
-      font-weight: bold;
-    }
-    .table-themed a:hover {
-      color: #fff;
-    }
-    .table-themed .badge.bg-secondary {
-        background-color: #000 !important;
+        background: rgba(27,27,27,0.9);
         color: #ffd700;
+        border-radius: 20px;
+        border: 4px solid #ff6b35;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        overflow: hidden;
     }
-    .table-themed .badge.bg-primary {
+
+    .table-themed th, .table-themed td {
+        padding: 0.8rem 1rem;
+        vertical-align: middle;
+    }
+
+    .table-themed thead {
+        background: linear-gradient(90deg, #ff6b35, #ff4500);
+        color: #fff;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .table-themed tbody tr {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .table-themed tbody tr:hover {
+        background: rgba(255, 107, 53, 0.3);
+        transform: scale(1.02);
+    }
+
+    .badge-primary {
         background-color: #ff6b35 !important;
         color: #fff;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #000;
     }
-  </style>
+
+    .badge-secondary {
+        background-color: #000 !important;
+        color: #ffd700;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px #000;
+    }
+
+    .flag-icon {
+        margin-right: 0.5rem;
+    }
+
+    select.page-select {
+        background: #1f2833;
+        color: #ffdd55;
+        border: 2px solid #ff6b35;
+        border-radius: 10px;
+        padding: 0.2rem 0.5rem;
+        font-weight: bold;
+    }
+
+    select.page-select:hover {
+        box-shadow: 0 0 10px #ff6b35;
+    }
+
+    a {
+        color: #ffdd55;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s;
+    }
+
+    a:hover {
+        color: #fff;
+        text-shadow: 1px 1px 2px #000;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-  <div class="container users-container">
-    <div class="row">
-      <div class="col-md-4 text-center">
-        <img src="{{ url_for('views.themes', path='img/sanji.png') }}" alt="Pirate" class="pirate-image mb-4">
-      </div>
-      <div class="col-md-8">
-        <h1 class="users-title">{% trans %}Pirates{% endtrans %}</h1>
+<div class="container users-container">
+    <div class="row align-items-center">
+        <div class="col-md-4 text-center">
+            <img src="{{ url_for('views.themes', path='img/sanji.png') }}" alt="Pirate" class="pirate-image">
+        </div>
+        <div class="col-md-8">
+            <h1 class="users-title">{% trans %}Pirates{% endtrans %}</h1>
 
-        {% if q and field %}
-          <h5 class="text-muted text-center" style="color: #ffd700 !important;">
-            {% trans %}Searching for trainers with <strong>{{ field }}</strong> matching <strong>{{ q }}</strong>{% endtrans %}
-          </h5>
-          <h6 class="text-muted text-center pb-3" style="color: #ffcc00 !important;">
-            {% trans page=users.page, total=users.total %}Page {{ page }} of {{ total }} results{% endtrans %}
-          </h6>
-        {% endif %}
+            {% if q and field %}
+                <h5 class="text-center text-warning mb-2">
+                    {% trans %}Searching for Trainers with <strong>{{ field }}</strong> matching <strong>{{ q }}</strong>{% endtrans %}
+                </h5>
+                <h6 class="text-center text-light mb-4">
+                    {% trans page=users.page, total=users.total %}Page {{ page }} of {{ total }} results{% endtrans %}
+                </h6>
+            {% endif %}
 
-        {% with form = Forms.users.PublicUserSearchForm(field=field, q=q) %}
-          <form method="GET" class="row justify-content-around align-items-center search-form">
-            <div class="mb-3 col-md-3">
-              {{ form.field(class="form-select w-100") }}
-            </div>
-            <div class="mb-3 col-md-7">
-              {{ form.q(class="form-control w-100", placeholder="Search for a Trainer...") }}
-            </div>
-            <div class="mb-3 col-md-2">
-              <button type="submit" class="btn btn-pokemon-yellow w-100">
-                <i class="fas fa-search" aria-hidden="true"></i>
-              </button>
-            </div>
-          </form>
-        {% endwith %}
+            {% with form = Forms.users.PublicUserSearchForm(field=field, q=q) %}
+            <form method="GET" class="row g-2 search-form mb-4">
+                <div class="col-md-4">
+                    {{ form.field(class="form-select w-100") }}
+                </div>
+                <div class="col-md-5">
+                    {{ form.q(class="form-control w-100", placeholder="Search for a Trainer...") }}
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-onepiece-orange w-100">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            {% endwith %}
 
-        <hr style="border-color: #ffcc00;">
+            <table class="table table-themed">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Trainer{% endtrans %}</th>
+                        <th>{% trans %}Website{% endtrans %}</th>
+                        <th class="d-none d-md-table-cell">{% trans %}Affiliation{% endtrans %}</th>
+                        <th class="d-none d-md-table-cell">{% trans %}Country{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users.items %}
+                    <tr>
+                        <td>
+                            {% if scores_visible() %}
+                            <a href="{{ url_for('users.public', user_id=user.id) }}">{{ user.name | truncate(50) }}</a>
+                            {% else %}
+                            <span>{{ user.name | truncate(50) }}</span>
+                            {% endif %}
+                            {% if user.bracket_id %}
+                                <span class="badge badge-secondary ms-2">{{ user.bracket.name }}</span>
+                            {% endif %}
+                            {% if user.oauth_id %}
+                                <a href="https://majorleaguecyber.org/u/{{ user.name }}"><span class="badge badge-primary ms-2">{% trans %}Official{% endtrans %}</span></a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center" style="width: 10px;">
+                            {% if user.website and (user.website.startswith('http://') or user.website.startswith('https://')) %}
+                            <a href="{{ user.website }}" target="_blank" rel="noopener">
+                                <i class="fas fa-external-link-alt" title="{{ user.website }}"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            {% if user.affiliation %}
+                                <span title="{{ user.affiliation }}">{{ user.affiliation | truncate(50) }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            {% if user.country %}
+                                <i class="flag-icon flag-{{ user.country.lower() }}"></i> {{ lookup_country_code(user.country) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <table class="table table-themed align-middle">
-          <thead>
-          <tr>
-            <th>{% trans %}Trainer{% endtrans %}</th>
-            <th>{% trans %}Website{% endtrans %}</th>
-            <th class="d-none d-md-table-cell">{% trans %}Affiliation{% endtrans %}</th>
-            <th class="d-none d-md-table-cell">{% trans %}Country{% endtrans %}</th>
-          </tr>
-          </thead>
-          <tbody>
-          {% for user in users.items %}
-            <tr>
-              <td>
-                {% if scores_visible() %}
-                  <a href="{{ url_for('users.public', user_id=user.id) }}">
-                    {{ user.name | truncate(50) }}
-                  </a>
-                {% else %}
-                  <span>{{ user.name | truncate(50) }}</span>
-                {% endif %}
-
-                {% if user.bracket_id %}
-                  <span class="badge bg-secondary ms-2">{{ user.bracket.name }}</span>
-                {% endif %}
-
-                {% if user.oauth_id %}
-                  <a href="https://majorleaguecyber.org/u/{{ user.name }}">
-                    <span class="badge bg-primary ms-2">{% trans %}Official{% endtrans %}</span>
-                  </a>
-                {% endif %}
-              </td>
-
-              <td class="text-center" style="width: 10px;">
-                {% if user.website and (user.website.startswith('http://') or user.website.startswith('https://')) %}
-                  <a href="{{ user.website }}" target="_blank" rel="noopener">
-                    <i
-                        class="fas fa-external-link-alt" data-toggle="tooltip" data-placement="top"
-                        title="{{ user.website }}"
-                    ></i>
-                  </a>
-                {% endif %}
-              </td>
-
-              <td class="d-none d-md-table-cell d-lg-table-cell">
-                {% if user.affiliation %}
-                  {% if user.affiliation | length > 50 %}
-                    <span data-toggle="tooltip" data-placement="top" title="{{ user.affiliation }}">
-									{{ user.affiliation | truncate(50) }}
-								</span>
-                  {% else %}
-                    <span>
-									{{ user.affiliation | truncate(50) }}
-								</span>
-                  {% endif %}
-                {% endif %}
-              </td>
-              <td class="d-none d-md-table-cell d-lg-table-cell">
-								<span>
-									{% if user.country %}
-                    <i class="flag-{{ user.country.lower() }}"></i>
-                    {{ lookup_country_code(user.country) }}
-                  {% endif %}
-								</span>
-              </td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-
-        {% if users.pages > 1 %}
-          <div class="row">
-            <div class="col-md-12">
-              <div class="text-center">
-                {% trans %}Page{% endtrans %} <br>
-
+            {% if users.pages > 1 %}
+            <div class="mt-3 text-center">
                 {% if users.page != 1 %}
-                  <a href="{{ prev_page }}">&lt;&lt;&lt;</a>
+                    <a href="{{ prev_page }}">&lt;&lt;&lt;</a>
                 {% endif %}
-
                 <select class="page-select">
-                  {% for page in range(1, users.pages + 1) %}
-                    <option {% if users.page == page %}selected{% endif %}>{{ page }}</option>
-                  {% endfor %}
+                    {% for page in range(1, users.pages + 1) %}
+                        <option {% if users.page == page %}selected{% endif %}>{{ page }}</option>
+                    {% endfor %}
                 </select>
-
                 {% if users.next_num %}
-                  <a href="{{ next_page }}">&gt;&gt;&gt;</a>
+                    <a href="{{ next_page }}">&gt;&gt;&gt;</a>
                 {% endif %}
-              </div>
             </div>
-          </div>
-        {% endif %}
-      </div>
+            {% endif %}
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-  {{ Assets.js("assets/js/users/list.js") }}
+{{ Assets.js("assets/js/users/list.js") }}
 {% endblock %}

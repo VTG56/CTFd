@@ -64,7 +64,7 @@
             object-fit: contain;
         }
 
-        .hero-logo-left, .hero-logo-right {
+        .hero-logo-left, .hero-logo-right, hero-logo-right2 {
             position: absolute;
             z-index: 5;
             width: auto;
@@ -72,16 +72,23 @@
         .hero-logo-left {
             top: 30px;
             left: 40px;
-            max-height: 120px;
+            max-height: 100px;
         }
         .hero-logo-right {
             top: 30px;
             right: 40px;
-            max-height: 100px;
+            max-height: 90px;
         }
-        
+        .hero-logo-right2 {
+        position: absolute;
+        top: 33px;      
+        right: 180px;    
+        max-height: 90px;
+        z-index: 5;     
+    }
+
         @media (max-width: 768px) {
-            .hero-logo-left, .hero-logo-right {
+            .hero-logo-left, .hero-logo-right, .hero-logo-right2 {
                 max-height: 70px;
                 top: 20px;
             }
@@ -145,6 +152,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 0 #c44520;
             font-family: inherit;
+            pointer-events: auto;        
+
         }
         
         .btn-onepiece-orange:hover {
@@ -188,6 +197,26 @@
                 padding: 0.45rem 1rem;
             }
         }
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    pointer-events: auto;        
+}
+.onepiece-hero {
+    overflow: hidden;     /* prevents scroll */
+    position: relative;   /* ensures canvas absolute is relative to hero */
+    pointer-events: none;        
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;     /* block any scroll from canvas */
+}
+
         .onepiece-card {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
@@ -243,11 +272,13 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="onepiece-hero">
-    <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="CC Logo" class="hero-logo-left">
-    <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="RVCE Logo" class="hero-logo-right">
+    <canvas id="particle-canvas"></canvas>
+    <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="RVCE Logo" class="hero-logo-left">
+    <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="CC Logo" class="hero-logo-right">
+    <img src="{{ url_for('views.themes', path='img/thws_logo.png') }}" alt="THWS Logo" class="hero-logo-right2">
     <div class="container text-center">
         <h1 class="event-title">Road to Poneglyph</h1>
-        <p class="onepiece-subtitle">Set Sail for the Grand Line!</p>
+        <p class="onepiece-subtitle">Hack your way to Laugh Tale!</p>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <p class="lead text-white mb-4" style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
@@ -272,4 +303,148 @@
         </div>
     </div>
 </section>
+
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+let particles = [];
+const config = {
+    particleCount: window.innerWidth < 768 ? 35 : 120,
+    maxSize: window.innerWidth < 768 ? 2.2 : 2.2,
+    minSize: 0.6,
+    maxSpeed: window.innerWidth < 768 ? 0.8 : 1.1,
+    connectionDistance: window.innerWidth < 768 ? 90 : 100,
+    mouseRadius: window.innerWidth < 768 ? 120 : 200,
+    particleColor: "#F8B301",
+    lineColor: "rgba(248,179,1,0.17)",
+    maxCursorConnections: window.innerWidth < 768 ? 3 : 4
+};
+
+const mouse = { x:null, y:null, active:false };
+
+canvas.style.position = 'absolute';
+canvas.style.top = 0;
+canvas.style.left = 0;
+canvas.style.width = '100%';
+canvas.style.height = '100%';
+canvas.style.zIndex = 1;  // behind content
+
+class Particle {
+    constructor(x,y){
+        this.x = x ?? Math.random()*width;
+        this.y = y ?? Math.random()*height;
+        this.size = Math.random()*(config.maxSize-config.minSize)+config.minSize;
+        this.speedX = (Math.random()-0.5)*config.maxSpeed*2;
+        this.speedY = (Math.random()-0.5)*config.maxSpeed*2;
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x>width) this.x=0;
+        if(this.x<0) this.x=width;
+        if(this.y>height) this.y=0;
+        if(this.y<0) this.y=height;
+    }
+    draw(){
+        ctx.fillStyle = config.particleColor;
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+    }
+}
+
+function initParticles(){
+    particles = [];
+    for(let i=0;i<config.particleCount;i++){
+        particles.push(new Particle());
+    }
+}
+
+function connectParticles(){
+    for(let a=0;a<particles.length;a++){
+        for(let b=a+1;b<particles.length;b++){
+            let dx = particles[a].x - particles[b].x;
+            let dy = particles[a].y - particles[b].y;
+            let d2 = dx*dx + dy*dy;
+            if(d2 < config.connectionDistance*config.connectionDistance){
+                ctx.strokeStyle = config.lineColor;
+                ctx.lineWidth = 1.6 - d2/(config.connectionDistance*config.connectionDistance);
+                ctx.beginPath();
+                ctx.moveTo(particles[a].x,particles[a].y);
+                ctx.lineTo(particles[b].x,particles[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function connectToMouse(){
+    if(!mouse.active || mouse.x===null) return;
+    let closest = particles.slice().filter(p=>{
+        let dx = p.x - mouse.x;
+        let dy = p.y - mouse.y;
+        return (dx*dx + dy*dy) < config.mouseRadius*config.mouseRadius;
+    }).sort((a,b)=>{
+        let da=(a.x-mouse.x)**2+(a.y-mouse.y)**2;
+        let db=(b.x-mouse.x)**2+(b.y-mouse.y)**2;
+        return da-db;
+    }).slice(0, config.maxCursorConnections);
+
+    closest.forEach(p=>{
+        ctx.strokeStyle = "#F8B301";
+        ctx.lineWidth = 0.3;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x,mouse.y);
+        ctx.lineTo(p.x,p.y);
+        ctx.stroke();
+
+        let dx=mouse.x-p.x, dy=mouse.y-p.y;
+        p.x += dx*0.05;
+        p.y += dy*0.05;
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,width,height);
+    particles.forEach(p=>{p.update();p.draw();});
+    connectParticles();
+    connectToMouse();
+    requestAnimationFrame(animate);
+}
+
+canvas.addEventListener('mousemove', e=>{
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.active = true;
+});
+
+canvas.addEventListener('mouseout', ()=>{
+    mouse.active=false;
+});
+
+canvas.addEventListener('click', e=>{
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    // spawn 3 new particles at click location
+    for(let i=0;i<3;i++){
+        particles.push(new Particle(x,y));
+    }
+});
+
+window.addEventListener('resize', ()=>{
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    initParticles();
+});
+
+initParticles();
+animate();
+</script>
+
+
 {% endblock %}

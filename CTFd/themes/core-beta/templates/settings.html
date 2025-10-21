@@ -4,6 +4,14 @@
 {% block stylesheets %}
 {{ super() }}
 <style>
+    @font-face {
+        font-family: 'One Piece Font';
+        src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     :root {
         --bg-dark-start: #0d1117;
         --bg-dark-end: #010409;
@@ -15,7 +23,7 @@
         --accent-orange: #ff6b35;
         --accent-red: #dc143c;
         --card-border: #30363d;
-        --card-shadow: rgba(0, 0, 0, 0.4);
+        --card-shadow: rgba(0, 0, 0, 0.5);
     }
 
     body {
@@ -24,21 +32,28 @@
     }
 
     .jumbotron {
-        background: linear-gradient(145deg, var(--accent-red) 0%, #8b0000 100%);
+        background: linear-gradient(145deg, var(--accent-red), #8b0000);
         color: var(--accent-yellow);
         padding: 3rem 1rem;
-        border-bottom: 5px solid var(--accent-orange);
+        border-bottom: 6px solid var(--accent-orange);
         margin-bottom: 3rem;
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 6px 20px var(--card-shadow);
+        border-radius: 12px;
         position: relative;
     }
 
     .jumbotron h1 {
         font-family: 'One Piece Font', sans-serif;
-        color: var(--accent-yellow);
         font-size: 3.5rem;
-        text-shadow: 0 0 10px var(--accent-orange), 0 0 20px var(--accent-red);
+        text-shadow: 2px 2px 0 #000, 4px 4px 0 var(--accent-orange);
+        color: var(--accent-yellow);
+    }
+
+    .jumbotron p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
     }
 
     .wanted-poster-sprite {
@@ -47,20 +62,13 @@
         height: 50px;
         cursor: pointer;
         z-index: 1;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, filter 0.3s ease;
         filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
-        pointer-events: auto;
     }
 
-    .wanted-poster-sprite img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-    
     .wanted-poster-sprite:hover {
-        transform: scale(1.2);
-        filter: drop-shadow(0 0 15px #ffd700);
+        transform: scale(1.3) rotate(-10deg);
+        filter: drop-shadow(0 0 20px var(--accent-yellow));
         z-index: 1000;
     }
 
@@ -70,6 +78,7 @@
         border: 2px solid var(--card-border);
         margin-bottom: 0.5rem;
         transition: all 0.3s ease;
+        border-radius: 10px;
     }
 
     .nav-pills .nav-link.active {
@@ -80,19 +89,19 @@
 
     .nav-pills .nav-link:hover {
         background: var(--surface-elevated);
-        border-color: var(--accent-orange);
+        border-color: var(--accent-yellow);
     }
 
     .form-control, .form-select {
         background: var(--surface-elevated);
         border: 2px solid var(--card-border);
         color: var(--text-primary);
-        border-radius: 8px;
+        border-radius: 10px;
     }
 
     .form-control:focus, .form-select:focus {
         border-color: var(--accent-orange);
-        box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        box-shadow: 0 0 10px var(--accent-orange);
         outline: none;
     }
 
@@ -100,296 +109,138 @@
         background-color: var(--accent-orange);
         color: #fff;
         border: 2px solid #000;
-        font-family: 'Arial', sans-serif;
+        font-family: 'One Piece Font', sans-serif;
         text-transform: uppercase;
+        box-shadow: 0 4px 0 #c44520;
     }
 
     .btn-primary:hover {
         background-color: #ff8c5e;
         border-color: var(--accent-yellow);
         color: var(--accent-yellow);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 #c44520;
+    }
+
+    table {
+        background: var(--surface-dark);
+        border-radius: 12px;
+        border: 2px solid var(--card-border);
+        color: var(--text-primary);
+    }
+
+    table th, table td {
+        border-color: var(--card-border);
+    }
+
+    .pokemon-sprite img {
+        filter: drop-shadow(0 0 8px var(--accent-yellow));
+        transition: transform 0.3s ease;
+    }
+
+    .pokemon-sprite img:hover {
+        transform: scale(1.2) rotate(10deg);
     }
 
 </style>
 {% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
+<div class="jumbotron">
     <div class="container">
-      <h1>
-        {% trans %}Settings{% endtrans %}
-      </h1>
+        <h1>{% trans %}Settings{% endtrans %}</h1>
+        <p class="lead">Adjust your profile and access tokens on the Grand Line!</p>
     </div>
+</div>
 
-  </div>
-
-  <div class="container" style="position: relative;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none;">
-        <!-- One Piece themed easter eggs with bounty posters and jolly rogers -->
-        <div class="wanted-poster-sprite" style="top: 5%; left: 5%;"><i class="fas fa-anchor" style="font-size: 50px; color: #ff6b35;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 15%; left: 90%;"><i class="fas fa-skull-crossbones" style="font-size: 50px; color: #000;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 25%; left: 8%;"><i class="fas fa-ship" style="font-size: 50px; color: #8b4513;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 35%; left: 88%;"><i class="fas fa-anchor" style="font-size: 50px; color: #dc143c;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 45%; left: 10%;"><i class="fas fa-skull-crossbones" style="font-size: 50px; color: #ffd700;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 55%; left: 92%;"><i class="fas fa-ship" style="font-size: 50px; color: #ff6b35;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 65%; left: 12%;"><i class="fas fa-anchor" style="font-size: 50px; color: #000;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 75%; left: 85%;"><i class="fas fa-skull-crossbones" style="font-size: 50px; color: #dc143c;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 85%; left: 14%;"><i class="fas fa-ship" style="font-size: 50px; color: #ffd700;"></i></div>
-        <div class="wanted-poster-sprite" style="top: 95%; left: 87%;"><i class="fas fa-anchor" style="font-size: 50px; color: #8b4513;"></i></div>
+<div class="container position-relative">
+    <div class="wanted-poster-sprite" style="top:5%; left:5%;">
+        <i class="fas fa-anchor" style="font-size:50px; color: var(--accent-orange);"></i>
+    </div>
+    <div class="wanted-poster-sprite" style="top:15%; left:90%;">
+        <i class="fas fa-skull-crossbones" style="font-size:50px; color: #000;"></i>
     </div>
     <div class="row">
-
-      <div class="col-md-3 offset-md-1 mb-3 mb-md-0">
-        <div class="nav flex-column nav-pills" role="tablist">
-          <button
-              class="nav-link active" id="settings-profile-tab" data-bs-toggle="pill"
-              data-bs-target="#profile" role="tab"
-          >{% trans %}Profile{% endtrans %}
-          </button>
-          <button
-              class="nav-link" id="settings-tokens-tab" data-bs-toggle="pill" data-bs-target="#tokens"
-              role="tab"
-          >{% trans %}Access Tokens{% endtrans %}
-          </button>
+        <div class="col-md-3 mb-3">
+            <div class="nav flex-column nav-pills" role="tablist">
+                <button class="nav-link active" id="settings-profile-tab" data-bs-toggle="pill" data-bs-target="#profile" role="tab">{% trans %}Profile{% endtrans %}</button>
+                <button class="nav-link" id="settings-tokens-tab" data-bs-toggle="pill" data-bs-target="#tokens" role="tab">{% trans %}Access Tokens{% endtrans %}</button>
+            </div>
         </div>
-      </div>
 
-      <div class="col-md-8">
-        <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="profile" role="tabpanel">
-            {% include "components/errors.html" %}
-
-            {% with form = Forms.self.SettingsForm(language=language, country=country) %}
-              <form
-                  method="post" accept-charset="utf-8" autocomplete="off" role="form"
-                  x-data="SettingsForm"
-                  @submit.prevent="updateProfile()"
-                  class="form-horizontal"
-              >
-
-                <div class="mb-3">
-                  <b>{{ form.name.label(class="form-label") }}</b>
-                  {{ form.name(class="form-control", value=name) }}
-                </div>
-
-                <div class="mb-3">
-                  <b>{{ form.email.label(class="form-label") }}</b>
-                  {{ form.email(class="form-control", value=email) }}
-                </div>
-
-                <div class="mb-3">
-                  <b>{{ form.language.label(class="form-label") }}</b>
-                  {{ form.language(class="form-select", value=language) }}
-                </div>
-
-                <hr>
-
-                <div class="mb-3">
-                  <b>{{ form.confirm.label(class="form-label") }}</b>
-                  {{ form.confirm(class="form-control") }}
-                </div>
-                <div class="mb-3">
-                  <b>{{ form.password.label(class="form-label") }}</b>
-                  {{ form.password(class="form-control") }}
-                </div>
-
-                <hr>
-
-                <div class="mb-3">
-                  <b>{{ form.affiliation.label(class="form-label") }}</b>
-                  {{ form.affiliation(class="form-control", value=affiliation or "") }}
-                </div>
-                <div class="mb-3">
-                  <b>{{ form.website.label(class="form-label") }}</b>
-                  {{ form.website(class="form-control", value=website or "") }}
-                </div>
-                <div class="mb-3" style="position: relative;">
-                  <b>{{ form.country.label(class="form-label") }}</b>
-                  {{ form.country(class="form-select", value=country) }}
-                  <a href="https://github.com/overclocked-2124/FIRST-YEARS-ARCHIVE" target="_blank" class="pokemon-sprite" style="right: -60px; top: 20px; width: 50px; height: 50px; z-index: 100;">
-                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png" alt="Persian" style="width: 100%; height: 100%; object-fit: contain;">
-                  </a>
-                </div>
-
-                <hr>
-
-                {{ render_extra_fields(form.extra) }}
-
-                <div id="results" class="mb-3">
-                  <div
-                      class="alert alert-success alert-dismissible submit-row" role="alert"
-                      x-cloak="success" x-show="success"
-                  >
-                    <strong>Success!</strong>
-                    {% trans %}Your profile has been updated{% endtrans %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
-                  </div>
-
-
-                  <template x-for="(msg, idx) in errors" :key="idx">
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                      <span class="sr-only">{% trans %}Error:{% endtrans %}</span>
-                      <span x-text="msg"></span>
-                      <button
-                          type="button" class="btn-close" data-bs-dismiss="alert"
-                          aria-label="Close"
-                      >
-                      </button>
-                    </div>
-                  </template>
-                </div>
-
-                <div class="mb-3">
-                  {{ form.submit(class="btn btn-primary float-end px-4") }}
-                </div>
-              </form>
-            {% endwith %}
-          </div>
-
-          <div class="tab-pane fade" id="tokens" role="tabpanel">
-
-            {% with form = Forms.self.TokensForm() %}
-              <form method="POST" x-data="TokensForm" @submit.prevent="generateToken()" class="mb-3">
-                <div class="modal fade" tabindex="-1" x-ref="tokenModal">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">{% trans %}API Key Generated{% endtrans %}</h5>
-                        <button
-                            type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                      </div>
-
-                      <div class="modal-body">
-                        <p>{% trans %}Please copy your API Key, it won't be shown again!{% endtrans %}</p>
-
-                        <div class="input-group mb-3">
-                          <input
-                              type="text" class="form-control bg-white" x-ref="token"
-                              x-model="token" readonly
-                          >
-                          <button
-                              class="btn btn-outline-secondary px-3" type="button"
-                              @click="copyToken()"
-                          >
-                            <i class="fas fa-clipboard"></i>
-                          </button>
+        <div class="col-md-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                    {% include "components/errors.html" %}
+                    {% with form = Forms.self.SettingsForm(language=language, country=country) %}
+                    <form method="post" x-data="SettingsForm" @submit.prevent="updateProfile()">
+                        <div class="mb-3">
+                            <b>{{ form.name.label(class="form-label") }}</b>
+                            {{ form.name(class="form-control", value=name) }}
                         </div>
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                          Got it!
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                        <div class="mb-3">
+                            <b>{{ form.email.label(class="form-label") }}</b>
+                            {{ form.email(class="form-control", value=email) }}
+                        </div>
+                        <div class="mb-3">
+                            <b>{{ form.language.label(class="form-label") }}</b>
+                            {{ form.language(class="form-select", value=language) }}
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <b>{{ form.confirm.label(class="form-label") }}</b>
+                            {{ form.confirm(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <b>{{ form.password.label(class="form-label") }}</b>
+                            {{ form.password(class="form-control") }}
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <b>{{ form.affiliation.label(class="form-label") }}</b>
+                            {{ form.affiliation(class="form-control", value=affiliation or "") }}
+                        </div>
+                        <div class="mb-3">
+                            <b>{{ form.website.label(class="form-label") }}</b>
+                            {{ form.website(class="form-control", value=website or "") }}
+                        </div>
+                        <div class="mb-3 position-relative">
+                            <b>{{ form.country.label(class="form-label") }}</b>
+                            {{ form.country(class="form-select", value=country) }}
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank" class="pokemon-sprite" style="position:absolute; right:-60px; top:0; width:50px; height:50px;">
+                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png" alt="Persian">
+                            </a>
+                        </div>
+                        <hr>
+                        {{ render_extra_fields(form.extra) }}
+                        <div class="mb-3">
+                            {{ form.submit(class="btn btn-primary float-end px-4") }}
+                        </div>
+                    </form>
+                    {% endwith %}
                 </div>
 
-                <div class="mb-3">
-                  <b>{{ form.expiration.label(class="form-label") }}</b>
-                  {{ form.expiration(class="form-control") }}
+                <div class="tab-pane fade" id="tokens" role="tabpanel">
+                    {% with form = Forms.self.TokensForm() %}
+                    <form method="POST" x-data="TokensForm" @submit.prevent="generateToken()" class="mb-3">
+                        <div class="mb-3">
+                            <b>{{ form.expiration.label(class="form-label") }}</b>
+                            {{ form.expiration(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <b>{{ form.description.label(class="form-label") }}</b>
+                            {{ form.description(class="form-control", rows="3") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.submit(class="btn btn-primary float-end px-4") }}
+                        </div>
+                    </form>
+                    {% endwith %}
                 </div>
-
-                <div class="mb-3">
-                  <b>{{ form.description.label(class="form-label") }}</b>
-                  {{ form.description(class="form-control", rows="3") }}
-                </div>
-
-                <div class="row">
-                  <div class="col">
-                    {{ form.submit(class="btn btn-block btn-primary float-end px-4") }}
-                  </div>
-                </div>
-              </form>
-            {% endwith %}
-
-            {% if tokens %}
-              <hr>
-
-              <h4 class="text-center mt-3">
-                {% trans %}Active Tokens{% endtrans %}
-              </h4>
-
-              {# This has to be wrapping the table modal, because div with modal will get pushed out
-                 of the table and alpine ref will not work #}
-              <div x-data="Tokens">
-                <div
-                    class="modal fade" x-ref="confirmModal" tabindex="-1" role="dialog"
-                    aria-modal="true"
-                >
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">{% trans %}Delete Token{% endtrans %}</h5>
-                        <button
-                            type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"
-                        >
-                        </button>
-                      </div>
-
-                      <div class="modal-body">
-                        <p>{% trans %}Are you sure you want to delete this token?{% endtrans %}</p>
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                          No
-                        </button>
-                        <button
-                            type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                            @click="deleteSelectedToken()"
-                        >Yes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <table class="table table-striped align-middle">
-                  <thead>
-                  <tr>
-                    <th class="text-center">{% trans %}Created{% endtrans %}</th>
-                    <th>{% trans %}Expiration{% endtrans %}</th>
-                    <th>{% trans %}Description{% endtrans %}</th>
-                    <th>{% trans %}Delete{% endtrans %}</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {% for token in tokens %}
-                    <tr x-ref="token-{{ token.id }}">
-                      <td class="text-center">
-                        <span data-time="{{ token.created | isoformat }}"></span>
-                      </td>
-                      <td>
-                        <span data-time="{{ token.expiration | isoformat }}"></span>
-                      </td>
-                      <td>
-                        <span>{{ token.description | default('', true) }}</span>
-                      </td>
-                      <td class="text-center">
-                        <span
-                            class="delete-token" role="button"
-                            @click="deleteTokenModal({{ token.id }})">
-                            <i class="cursor-pointer fas fa-times"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  {% endfor %}
-
-                  </tbody>
-                </table>
-              </div>
-            {% endif %}
-
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
