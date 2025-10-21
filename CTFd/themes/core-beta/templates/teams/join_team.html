@@ -31,65 +31,82 @@
     z-index: 1;
   }
   :root {
-    --pokemon-yellow: #ffcc00;
-    --pokemon-blue: #2c6cb3;
+    --onepiece-gold: #ffd700;
+    --onepiece-red: #dc143c;
+    --onepiece-orange: #ff6b35;
+    --onepiece-dark-red: #8b0000;
   }
 
   body {
     background-color: #1a1a1a;
     color: #fff;
+    font-family: 'One Piece Font', 'Arial', sans-serif;
   }
 
   .jumbotron {
     background-color: transparent !important;
-    border-bottom: 3px solid var(--pokemon-yellow);
+    border-bottom: 3px solid var(--onepiece-gold);
     padding-bottom: 1rem;
     margin-bottom: 2rem;
   }
 
   .container h1 {
-    color: var(--pokemon-yellow);
-    text-shadow: 2px 2px 4px var(--pokemon-blue);
+    color: var(--onepiece-gold);
+    text-shadow: 2px 2px 4px var(--onepiece-red);
     font-weight: bold;
   }
 
   .themed-container {
-    background-color: rgba(44, 108, 179, 0.2);
-    border: 2px solid var(--pokemon-yellow);
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(220, 20, 60, 0.2) 100%);
+    border: 2px solid var(--onepiece-gold);
     border-radius: 15px;
     padding: 2rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   }
 
   .form-control {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: var(--pokemon-blue);
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--onepiece-orange);
     color: #fff;
   }
 
   .form-control:focus {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: var(--pokemon-yellow);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: var(--onepiece-gold);
     color: #fff;
-    box-shadow: 0 0 10px var(--pokemon-yellow);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
   }
 
   .form-label {
-    color: var(--pokemon-yellow);
+    color: var(--onepiece-gold);
+    font-weight: bold;
   }
 
   .btn-success {
-    background-color: var(--pokemon-yellow);
-    border-color: var(--pokemon-blue);
-    color: var(--pokemon-blue);
+    background: linear-gradient(135deg, var(--onepiece-gold) 0%, var(--onepiece-orange) 100%);
+    border: 2px solid var(--onepiece-gold);
+    color: #000;
     font-weight: bold;
     transition: all 0.3s ease;
+    text-shadow: none;
   }
 
   .btn-success:hover {
-    background-color: var(--pokemon-blue);
-    border-color: var(--pokemon-yellow);
-    color: var(--pokemon-yellow);
+    background: linear-gradient(135deg, var(--onepiece-red) 0%, var(--onepiece-dark-red) 100%);
+    border-color: var(--onepiece-gold);
+    color: var(--onepiece-gold);
     transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  }
+  
+  .crew-image {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    transition: all 0.3s ease;
+  }
+  
+  .crew-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
   }
 </style>
 {% endblock %}
@@ -101,14 +118,14 @@
   <div class="content-wrapper">
   <div class="jumbotron">
     <div class="container">
-      <h1>{% trans %}Join Team{% endtrans %}</h1>
+      <h1>{% trans %}Join Pirate Crew{% endtrans %}</h1>
     </div>
   </div>
   <div class="container-fluid">
     <div class="row align-items-center">
-      <!-- Charizard on the left -->
+      <!-- Pirate crew member on the left -->
       <div class="col-md-3 d-none d-md-block text-center">
-        <img src="{{ url_for('views.themes', path='img/Charizard.png') }}" alt="Charizard" class="img-fluid" style="max-height: 300px;">
+        <img src="{{ url_for('views.themes', path='img/law.png') }}" alt="Pirate Crew" class="img-fluid crew-image" style="max-height: 300px;">
       </div>
       
       <!-- Main content in the center -->
@@ -139,9 +156,9 @@
         </div>
       </div>
       
-      <!-- Blastoise on the right -->
+      <!-- Pirate crew member on the right -->
       <div class="col-md-3 d-none d-md-block text-center">
-        <img src="{{ url_for('views.themes', path='img/Blastoise.png') }}" alt="Blastoise" class="img-fluid" style="max-height: 300px;">
+        <img src="{{ url_for('views.themes', path='img/sunny.png') }}" alt="Pirate Crew" class="img-fluid crew-image" style="max-height: 300px; transform: scaleX(-1);">
       </div>
       </div>
     </div>

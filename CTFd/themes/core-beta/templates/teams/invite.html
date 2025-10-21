@@ -4,56 +4,64 @@
 {{ super() }}
 <style>
   :root {
-    --pokemon-yellow: #ffcc00;
-    --pokemon-blue: #2c6cb3;
+    --onepiece-gold: #ffd700;
+    --onepiece-red: #dc143c;
+    --onepiece-orange: #ff6b35;
+    --onepiece-dark-red: #8b0000;
   }
 
   body {
     background-color: #1a1a1a;
     color: #fff;
+    font-family: 'One Piece Font', 'Arial', sans-serif;
   }
 
   .jumbotron {
     background-color: transparent !important;
-    border-bottom: 3px solid var(--pokemon-yellow);
+    border-bottom: 3px solid var(--onepiece-gold);
     padding-bottom: 1rem;
     margin-bottom: 2rem;
   }
 
   .container h1 {
-    color: var(--pokemon-yellow);
-    text-shadow: 2px 2px 4px var(--pokemon-blue);
+    color: var(--onepiece-gold);
+    text-shadow: 2px 2px 4px var(--onepiece-red);
     font-weight: bold;
   }
 
   .themed-container {
-    background-color: rgba(44, 108, 179, 0.2);
-    border: 2px solid var(--pokemon-yellow);
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(220, 20, 60, 0.2) 100%);
+    border: 2px solid var(--onepiece-gold);
     border-radius: 15px;
     padding: 2rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   }
 
   .btn-success {
-    background-color: var(--pokemon-yellow);
-    border-color: var(--pokemon-blue);
-    color: var(--pokemon-blue);
+    background: linear-gradient(135deg, var(--onepiece-gold) 0%, var(--onepiece-orange) 100%);
+    border: 2px solid var(--onepiece-gold);
+    color: #000;
     font-weight: bold;
     transition: all 0.3s ease;
+    text-shadow: none;
   }
 
   .btn-success:hover {
-    background-color: var(--pokemon-blue);
-    border-color: var(--pokemon-yellow);
-    color: var(--pokemon-yellow);
+    background: linear-gradient(135deg, var(--onepiece-red) 0%, var(--onepiece-dark-red) 100%);
+    border-color: var(--onepiece-gold);
+    color: var(--onepiece-gold);
     transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
   }
 
   a {
-    color: var(--pokemon-yellow);
+    color: var(--onepiece-gold);
+    transition: all 0.3s ease;
   }
 
   a:hover {
-    color: #fff;
+    color: var(--onepiece-orange);
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
   }
 
   .text-muted {
@@ -65,7 +73,7 @@
 {% block content %}
   <div class="jumbotron">
     <div class="container">
-      <h1>{% trans %}Join Team{% endtrans %}</h1>
+      <h1>{% trans %}Join Pirate Crew{% endtrans %}</h1>
     </div>
   </div>
   <div class="container">
@@ -75,14 +83,14 @@
             {% include "components/errors.html" %}
 
             <p class="h3 text-center mt-md-4">
-              {% trans %}Welcome to{% endtrans %} <strong>{{ team.name }}</strong>!
+              {% trans %}Set Sail with{% endtrans %} <strong>{{ team.name }}</strong>!
             </p>
 
             <p class="text-center">
-              {% trans %}Click the button below to join the team!{% endtrans %}
+              {% trans %}Click the button below to join the crew!{% endtrans %}
               <br>
               <small class="text-muted">
-                Or <a href="{{ url_for('teams.new') }}">click here</a> if you'd prefer to create your own team.
+                Or <a href="{{ url_for('teams.new') }}">click here</a> if you'd prefer to create your own pirate crew.
               </small>
             </p>
 

@@ -4,9 +4,9 @@
         --surface-elevated: #21262d;
         --text-primary: #e6edf3;
         --text-secondary: #8b949e;
-        --accent-yellow: #ffd733;
-        --accent-blue: #3B4CCA;
-        --accent-red: #E3350D;
+        --accent-yellow: #ffd700;
+        --accent-orange: #ff6b35;
+        --accent-red: #dc143c;
         --border-color: #30363d;
         --success-glow: rgba(31, 136, 61, 0.6);
         --danger-glow: rgba(248, 81, 73, 0.6);
@@ -46,19 +46,19 @@
     }
 
     .challenge-name {
-        font-family: 'Pokemon Solid', sans-serif;
+        font-family: 'One Piece Font', sans-serif;
         color: var(--accent-yellow);
         font-size: 2.2rem;
         text-shadow: 0 0 8px rgba(0,0,0,0.7);
     }
     .challenge-value {
-        font-family: 'Pokemon Solid', sans-serif;
+        font-family: 'One Piece Font', sans-serif;
         color: var(--accent-red);
         font-size: 1.5rem;
         margin-top: -0.5rem;
     }
     .challenge-tag {
-        background-color: var(--accent-blue);
+        background-color: var(--accent-orange);
         color: var(--text-primary);
         border-radius: 15px;
         padding: 0.3rem 0.8rem;
@@ -82,38 +82,38 @@
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .challenge-input:focus {
-        border-color: var(--accent-blue);
-        box-shadow: 0 0 10px rgba(59, 76, 202, 0.5);
+        border-color: var(--accent-orange);
+        box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
         outline: none;
     }
 
-    .btn-pokemon-yellow {
-        background-color: #ffcc00;
-        color: #2c6cb3;
-        border: 3px solid #2c6cb3;
+    .btn-onepiece-orange {
+        background-color: #ff6b35;
+        color: #fff;
+        border: 3px solid #000;
         padding: 0.5rem 1.5rem;
         font-size: 1.2rem;
         border-radius: 30px;
         font-weight: bold;
         text-transform: uppercase;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 0 #d4a900;
-        font-family: 'Press Start 2P', cursive;
+        box-shadow: 0 4px 0 #c44520;
+        font-family: 'Arial', sans-serif;
         text-decoration: none;
         cursor: pointer;
     }
     
-    .btn-pokemon-yellow:hover {
-        background-color: #ffd633;
-        color: var(--accent-red) !important;
-        border-color: var(--accent-red);
+    .btn-onepiece-orange:hover {
+        background-color: #ff8c5e;
+        color: #ffd700 !important;
+        border-color: #ffd700;
         transform: translateY(-2px);
-        box-shadow: 0 6px 0 #d4a900;
+        box-shadow: 0 6px 0 #c44520;
     }
     
-    .btn-pokemon-yellow:active {
+    .btn-onepiece-orange:active {
         transform: translateY(2px);
-        box-shadow: 0 2px 0 #d4a900;
+        box-shadow: 0 2px 0 #c44520;
     }
 
     /* Hints */
@@ -256,7 +256,7 @@
                       {% set filename = segments | last %}
                     {% endif %}
                     <a
-                        class="btn btn-pokemon-yellow mb-1 d-inline-block px-2 w-100 text-truncate"
+                        class="btn btn-onepiece-orange mb-1 d-inline-block px-2 w-100 text-truncate"
                         href="{{ file }}"
                         title="{{ filename }}"
                     >
@@ -295,7 +295,7 @@
               <div class="col-12 col-sm-4 mt-3 mt-sm-0 key-submit">
                 {% block submit %}
                   <button
-                      id="challenge-submit" class="challenge-submit btn btn-pokemon-yellow w-100 h-100" type="submit"
+                      id="challenge-submit" class="challenge-submit btn btn-onepiece-orange w-100 h-100" type="submit"
                       @click.debounce.500ms="submitChallenge()"
                   >
                     {% trans %}Submit{% endtrans %}
@@ -319,13 +319,13 @@
                     <strong x-text="response.data.message"></strong>
                     <div x-show="(response.data.status == 'correct' || response.data.status == 'already_solved')">
                       <div x-show="getNextId()">
-                        <button @click="nextChallenge()" class="btn btn-pokemon-yellow mt-3">
+                        <button @click="nextChallenge()" class="btn btn-onepiece-orange mt-3">
                           {% trans %}Next Challenge{% endtrans %}
                         </button>
                       </div>
                       {% if Configs.social_shares %}
                       <div>
-                        <button x-show="!share_url" @click="getShareUrl()" class="btn btn-pokemon-yellow btn-sm mt-3">
+                        <button x-show="!share_url" @click="getShareUrl()" class="btn btn-onepiece-orange btn-sm mt-3">
                           {% trans %}Share{% endtrans %}
                         </button>
                         <div class="btn-group mt-3" role="group" x-show="share_url">

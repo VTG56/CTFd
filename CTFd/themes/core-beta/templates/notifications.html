@@ -3,21 +3,30 @@
 {% block stylesheets %}
 {{ super() }}
 <style>
+    @font-face {
+        font-family: 'One Piece Font';
+        src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     :root {
-        --pokemon-yellow: #ffcc00;
-        --pokemon-blue: #3B4CCA;
+        --onepiece-gold: #ffd700;
+        --onepiece-orange: #ff6b35;
+        --onepiece-red: #dc143c;
         --card-bg: rgba(30, 30, 35, 0.95);
-        --card-border: #3B4CCA;
+        --card-border: #ff6b35;
         --card-shadow: rgba(0, 0, 0, 0.3);
         --text-primary: #e6e6e6;
         --text-secondary: #a0a0a0;
     }
 
     .jumbotron {
-        background: linear-gradient(135deg, #1a2a6c 0%, #3B4CCA 100%);
-        color: var(--pokemon-yellow);
+        background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+        color: var(--onepiece-gold);
         padding: 2rem 1rem;
-        border-bottom: 5px solid var(--pokemon-yellow);
+        border-bottom: 5px solid var(--onepiece-orange);
         margin-bottom: 2rem;
         border-radius: 0;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -25,16 +34,19 @@
 
     .jumbotron h1,
     .jumbotron .h1 {
-        font-family: 'Pokemon Solid', sans-serif;
+        font-family: 'One Piece Font', sans-serif;
         font-weight: bold;
-        text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+        text-shadow: 
+            3px 3px 0 #ff6b35,
+            6px 6px 0 #000000;
+        color: #ffd700;
     }
 
-    .pokemon-font {
-        font-family: 'Pokemon Solid', sans-serif;
+    .onepiece-font {
+        font-family: 'One Piece Font', sans-serif;
     }
 
-    .oak-message-card {
+    .message-card {
         background: var(--card-bg);
         border: 2px solid var(--card-border);
         border-radius: 15px;
@@ -44,38 +56,38 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     
-    .oak-message-card:hover {
+    .news-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .oak-message-card .card-title {
-        font-family: 'Pokemon Solid', sans-serif;
-        color: var(--pokemon-yellow);
+    .news-card .card-title {
+        font-family: 'One Piece Font', sans-serif;
+        color: #ffd700;
         font-size: 1.8rem;
-        border-bottom: 2px solid var(--pokemon-blue);
+        border-bottom: 2px solid #ff6b35;
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
-        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        text-shadow: 2px 2px 0 #dc143c, 4px 4px 0 #000000;
     }
 
-    .oak-message-card .card-body p {
+    .news-card .card-body p {
         font-size: 1.1rem;
         line-height: 1.6;
         color: var(--text-primary);
     }
     
-    .oak-message-card .card-body a {
-        color: var(--pokemon-yellow);
+    .news-card .card-body a {
+        color: var(--onepiece-gold);
         text-decoration: none;
         font-weight: 500;
     }
     
-    .oak-message-card .card-body a:hover {
+    .news-card .card-body a:hover {
         text-decoration: underline;
     }
 
-    .oak-message-card .card-footer {
+    .news-card .card-footer {
         background: transparent;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-top: 1rem;
@@ -90,19 +102,19 @@
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <h1 class="pokemon-font">Professor Oak's Messages</h1>
-        <p class="lead">Important updates from the lab!</p>
+        <h1 class="onepiece-font">News from the Seas</h1>
+        <p class="lead">Important updates from the Grand Line!</p>
     </div>
 </div>
 <div class="container">
     {% if not notifications %}
     <div class="text-center py-5">
-        <h2 class="pokemon-font" style="color: var(--pokemon-yellow);">No new messages!</h2>
-        <p class="lead" style="color: var(--text-secondary);">The Professor is busy with his research. Check back later!</p>
+        <h2 class="onepiece-font" style="color: var(--onepiece-gold);">No new messages!</h2>
+        <p class="lead" style="color: var(--text-secondary);">The seas are calm. Check back later for news!</p>
     </div>
     {% endif %}
     {% for notification in notifications %}
-    <div class="oak-message-card">
+    <div class="news-card">
         <div class="card-body">
             <h3 class="card-title">{{ notification.title }}</h3>
             <div class="message-content">

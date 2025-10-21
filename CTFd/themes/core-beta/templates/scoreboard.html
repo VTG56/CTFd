@@ -3,11 +3,20 @@
 {% block stylesheets %}
 {{ super() }}
 <style>
+    @font-face {
+        font-family: 'One Piece Font';
+        src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     :root {
-        --pokemon-yellow: #ffcc00;
-        --pokemon-blue: #2c6cb3;
+        --onepiece-gold: #ffd700;
+        --onepiece-red: #dc143c;
+        --onepiece-orange: #ff6b35;
         --table-bg: rgba(255, 255, 255, 0.9);
-        --table-border: #ffcc00;
+        --table-border: #ff6b35;
         --table-shadow: rgba(0, 0, 0, 0.2);
         --gold-medal: #ffd700;
         --silver-medal: #c0c0c0;
@@ -15,23 +24,26 @@
     }
 
     .jumbotron {
-        background-color: var(--pokemon-blue);
-        color: var(--pokemon-yellow);
+        background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+        color: var(--onepiece-gold);
         padding: 2rem 1rem;
-        border-bottom: 5px solid var(--pokemon-yellow);
+        border-bottom: 5px solid var(--onepiece-orange);
         margin-bottom: 2rem;
         border-radius: 0;
     }
 
     .jumbotron h1,
     .jumbotron .h1 {
-        font-family: 'Pokemon Solid', sans-serif;
+        font-family: 'One Piece Font', sans-serif;
         font-weight: bold;
-        text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+        text-shadow: 
+            3px 3px 0 #ff6b35,
+            6px 6px 0 #000000;
+        color: #ffd700;
     }
 
-    .pokemon-font {
-        font-family: 'Pokemon Solid', sans-serif;
+    .onepiece-font {
+        font-family: 'One Piece Font', sans-serif;
     }
 
     .hall-of-fame-table {
@@ -43,12 +55,13 @@
     }
 
     .hall-of-fame-table thead th {
-        background-color: var(--pokemon-blue);
-        color: var(--pokemon-yellow);
-        font-family: 'Pokemon Solid', sans-serif;
+        background-color: var(--onepiece-red);
+        color: #ffd700;
+        font-family: 'One Piece Font', sans-serif;
         font-size: 1.2rem;
-        border-bottom: 4px solid var(--table-border);
+        border-bottom: 4px solid #ff6b35;
         text-align: center;
+        text-shadow: 2px 2px 0 #000, 3px 3px 0 #000;
     }
 
     .hall-of-fame-table tbody tr {
@@ -60,7 +73,7 @@
     }
 
     .hall-of-fame-table tbody tr:hover {
-        background-color: rgba(255, 204, 0, 0.2);
+        background-color: rgba(255, 107, 53, 0.2);
     }
 
     .hall-of-fame-table .rank-col { width: 10%; }
@@ -77,7 +90,7 @@
     .rank-3 { color: var(--bronze-medal); }
 
     .current-user {
-        background-color: rgba(44, 108, 179, 0.3) !important;
+        background-color: rgba(220, 20, 60, 0.3) !important;
         font-weight: bold;
     }
 </style>
@@ -86,8 +99,8 @@
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <h1 class="pokemon-font">Hall of Fame</h1>
-        <p class="lead">See which trainers are leading the pack!</p>
+        <h1 class="onepiece-font">Bounty Board</h1>
+        <p class="lead">See which pirates have the highest bounties on the Grand Line!</p>
     </div>
 </div>
 
@@ -142,7 +155,7 @@
         </div>
 
         <div class="col-md-12" x-show="!standings.length">
-            <h3 class="text-center text-muted pokemon-font">Scoreboard is empty</h3>
+            <h3 class="text-center text-muted onepiece-font">No bounties yet</h3>
         </div>
     </div>
 </div>
