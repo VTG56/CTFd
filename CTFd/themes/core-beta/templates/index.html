@@ -10,6 +10,14 @@
             font-style: normal;
             font-display: swap;
         }
+        /* Intrepid font for subtitle */
+        @font-face {
+            font-family: 'Intrepid';
+            src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         
         .event-title {
             font-family: 'One Piece Font', 'Arial Black', sans-serif;
@@ -106,7 +114,7 @@
             }
         }
         .onepiece-subtitle {
-            font-family: Arial, sans-serif;
+            font-family: 'Intrepid', Arial, sans-serif;
             font-size: 1.8rem;
             color: #ff6b35;
             margin: 0 0 2rem 0;
