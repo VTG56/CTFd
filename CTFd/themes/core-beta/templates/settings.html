@@ -136,6 +136,10 @@
     .pokemon-sprite img {
         filter: drop-shadow(0 0 8px var(--accent-yellow));
         transition: transform 0.3s ease;
+        /* Force a very small rendering size so the image cannot overflow */
+        width: 80px !important;
+        height: 80px !important;
+        object-fit: contain;
     }
 
     .pokemon-sprite img:hover {
@@ -207,8 +211,8 @@
                         <div class="mb-3 position-relative">
                             <b>{{ form.country.label(class="form-label") }}</b>
                             {{ form.country(class="form-select", value=country) }}
-                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank" class="pokemon-sprite" style="position:absolute; right:-60px; top:0; width:50px; height:50px;">
-                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png" alt="Persian">
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank" class="pokemon-sprite" style="position:absolute; right:-60px; top:0;">
+                                <img src="{{ url_for('views.themes', path='img/pngegg.png') }}" alt="Custom Image" style="width:24px; height:24px;">
                             </a>
                         </div>
                         <hr>
