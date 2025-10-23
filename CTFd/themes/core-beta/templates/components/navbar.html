@@ -1,17 +1,23 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: linear-gradient(135deg, #8b0000 0%, #dc143c 50%, #8b0000 100%); border-bottom: 3px solid #ffd700;">
   <div class="container">
     <a href="{{ url_for('views.static_html', route='') }}" class="navbar-brand">
-      {% if Configs.ctf_logo %}
-        <img
-            class="img-responsive ctf_logo"
-            src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
-            alt="{{ Configs.ctf_name }}"
-            height="25"
-        >
-      {% else %}
-        {{ Configs.ctf_name }}
-      {% endif %}
-    </a>
+  {% if Configs.ctf_logo %}
+    <img
+      src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
+      alt="{{ Configs.ctf_name }}"
+      height="40"   
+      style="object-fit: contain;"
+    >
+  {% else %}
+    <img
+      src="{{ url_for('views.themes', path='img/Navlogo.png') }}"
+      alt="Road to Poneglyph"
+      height="26"
+      style="object-fit: contain;"
+    >
+  {% endif %}
+</a>
+
 
     <button
         class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#base-navbars"
