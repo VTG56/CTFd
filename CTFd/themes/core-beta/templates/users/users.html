@@ -37,10 +37,10 @@
     .search-form .form-select,
     .search-form .form-control {
         background-color: rgba(255,255,255,0.95);
+        color: #8b0000;
         border: 3px solid #ff6b35;
         border-radius: 12px;
         font-weight: bold;
-        color: #8b0000;
         transition: all 0.3s ease;
     }
 
@@ -95,6 +95,16 @@
         transition: all 0.3s ease;
         cursor: pointer;
     }
+    
+    ::placeholder {
+    color: rgba(80, 0, 0, 0.5); 
+    font-weight: bold;
+    }
+
+    .search-form .form-control::placeholder {
+    color: rgba(50, 0, 0, 0.5);
+    }
+
 
     .table-themed tbody tr:hover {
         background: rgba(255, 107, 53, 0.3);
@@ -170,7 +180,7 @@
                     {{ form.field(class="form-select w-100") }}
                 </div>
                 <div class="col-md-5">
-                    {{ form.q(class="form-control w-100", placeholder="Search for a Trainer...") }}
+                    {{ form.q(class="form-control w-100", placeholder="Search for a Crew...") }}
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-onepiece-orange w-100">
@@ -183,7 +193,7 @@
             <table class="table table-themed">
                 <thead>
                     <tr>
-                        <th>{% trans %}Trainer{% endtrans %}</th>
+                        <th>{% trans %}Crew Member{% endtrans %}</th>
                         <th>{% trans %}Website{% endtrans %}</th>
                         <th class="d-none d-md-table-cell">{% trans %}Affiliation{% endtrans %}</th>
                         <th class="d-none d-md-table-cell">{% trans %}Country{% endtrans %}</th>
