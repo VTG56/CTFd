@@ -1,289 +1,175 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-    {{ Assets.css("assets/scss/main.scss") }}
-    <style>
-        @font-face {
-            font-family: 'One Piece Font';
-            src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        /* Intrepid font for subtitle */
-        @font-face {
-            font-family: 'Intrepid';
-            src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        
-        .event-title {
-            font-family: 'One Piece Font', 'Arial Black', sans-serif;
-            font-size: 3.5rem;
-            color: #ffd700;
-            text-shadow: 
-                3px 3px 0 #ff0000,
-                6px 6px 0 #000000;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .event-title {
-                font-size: 2rem;
-            }
-        }
-        
-        .onepiece-hero {
-            /* Use a subtle dark overlay on top of the background image to improve text readability */
-            background: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)), url('{{ url_for("views.themes", path="img/OP-BG.png") }}') no-repeat center bottom / cover;
-            background-position: center bottom;
-            min-height: 100vh;
-            max-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 10vh;
-        }
-        .onepiece-hero .container {
-            position: relative;
-            z-index: 2;
-            padding: 0;
-            margin-top: -5vh;
-        }
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            max-width: 600px;
-        }
-        
-        .onepiece-logo {
-            max-width: 100%;
-            height: auto;
-            max-height: 200px;
-            object-fit: contain;
-        }
-
-        .hero-logo-left, .hero-logo-right, hero-logo-right2 {
-            position: absolute;
-            z-index: 5;
-            width: auto;
-        }
-        .hero-logo-left {
-            top: 30px;
-            left: 40px;
-            max-height: 100px;
-        }
-        .hero-logo-right {
-            top: 30px;
-            right: 40px;
-            max-height: 90px;
-        }
-        .hero-logo-right2 {
-        position: absolute;
-        top: 33px;      
-        right: 180px;    
-        max-height: 90px;
-        z-index: 5;     
-    }
-
-        @media (max-width: 768px) {
-            .hero-logo-left, .hero-logo-right, .hero-logo-right2 {
-                max-height: 70px;
-                top: 20px;
-            }
-            .hero-logo-left {
-                left: 20px;
-            }
-            .hero-logo-right {
-                right: 20px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .onepiece-title {
-                font-size: 4rem;
-            }
-        }
-        .onepiece-subtitle {
-            font-family: 'Intrepid', Arial, sans-serif;
-            font-size: 1.8rem;
-            color: #ff6b35;
-            margin: 0 0 2rem 0;
-            padding: 0;
-            text-shadow: 
-                -1px -1px 0 #1a1a1a,  
-                 1px -1px 0 #1a1a1a,
-                -1px  1px 0 #1a1a1a,
-                 1px  1px 0 #1a1a1a,
-                 0   0 8px #ffd700; /* Optional: Adds a glow effect */
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            line-height: 1.4;
-            font-weight: bold;
-            display: inline-block;
-            background: none;
-        }
-        
-
-        
-        @media (max-width: 768px) {
-            .onepiece-subtitle {
-                font-size: 1.4rem;
-                padding: 8px 15px;
-            }
-            
-            .navbar-dark .navbar-nav .nav-link {
-                margin: 2px 0;
-                text-align: center;
-            }
-        }
-        
-        .btn-onepiece-orange {
-            background-color: #ff6b35;
-            color: #ffffff;
-            border: 3px solid #1a1a1a;
-            padding: 0.5rem 1.5rem;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 0 #c44520;
-            font-family: inherit;
-            pointer-events: auto;        
-
-        }
-        
-        .btn-onepiece-orange:hover {
-            background-color: #ff8c5e;
-            color: #ffd700;
-            border-color: #ffd700;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c44520;
-        }
-        
-        .btn-onepiece-orange:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #c44520;
-        }
-        
-        .luffy-image {
-            max-width: 300px; /* slightly smaller so the character fits better */
-            margin: 1.5rem auto 0;
-            display: block;
-            position: relative;
-            z-index: 10;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        /* Responsive adjustments for the character image to avoid overlap on small screens */
-        @media (max-width: 768px) {
-            .luffy-image {
-                max-width: 180px;
-                margin-top: 1rem;
-                animation: none; /* remove animation on small screens to reduce motion */
-            }
-            .onepiece-subtitle {
-                font-size: 1.25rem;
-            }
-            .btn-onepiece-orange {
-                min-width: 160px;
-                padding: 0.45rem 1rem;
-            }
-        }
-#particle-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99;
-    pointer-events: auto;        
+{{ Assets.css("assets/scss/main.scss") }}
+<style>
+@font-face {
+  font-family: 'One Piece Font';
+  src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
+  font-display: swap;
 }
+@font-face {
+  font-family: 'Intrepid';
+  src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
+  font-display: swap;
+}
+
+/* ===== Hero Section ===== */
 .onepiece-hero {
-    overflow: hidden;     /* prevents scroll */
-    position: relative;   /* ensures canvas absolute is relative to hero */
-    pointer-events: none;        
-}
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;     /* block any scroll from canvas */
+  background: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)),
+              url('{{ url_for("views.themes", path="img/OP-BG.png") }}') center/cover no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center everything vertically */
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-        .onepiece-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 4px solid #ff6b35;
-        }
-        .bounty-tag {
-            display: inline-block;
-            padding: 0.25rem 1rem;
-            border-radius: 15px;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            margin: 0.2rem;
-        }
-        .btn-onepiece {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.8rem;
-            padding: 0.5rem 1.5rem;
-            margin: 0.5rem;
-            border: none;
-            border-radius: 20px;
-            color: white;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .btn-onepiece:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .btn-onepiece-blue {
-            background-color: #004aad;
-        }
-        .btn-onepiece-red {
-            background-color: #dc143c;
-        }
-        .onepiece-feature {
-            text-align: center;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .onepiece-feature i {
-            font-size: 2.5rem;
-            color: #ff6b35;
-            margin-bottom: 1rem;
-        }
-    </style>
+/* ===== Logo Bar (2 left, 1 right) ===== */
+.hero-logo-bar {
+  position: absolute;
+  top: 2%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2%;
+  z-index: 5;
+}
+
+.logo-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo-left img,
+.logo-right img {
+  height: clamp(60px, 8vw, 100px);
+  width: auto;
+}
+
+.logo-right img {
+  height: clamp(60px, 8vw, 100px);
+}
+
+/* ===== Title & Subtitle ===== */
+.event-title {
+  font-family: 'One Piece Font', sans-serif;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  color: #ffd700;
+  text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #000;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.onepiece-subtitle {
+  font-family: 'Intrepid', Arial, sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #ff6b35;
+  text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111, 0 0 6px #ffd700;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Button ===== */
+.btn-onepiece-orange {
+  background-color: #ff6b35;
+  color: white;
+  border: 3px solid #111;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 0 #c44520;
+}
+
+.btn-onepiece-orange:hover {
+  background-color: #ff8c5e;
+  color: #ffd700;
+  border-color: #ffd700;
+  transform: translateY(-2px);
+}
+
+/* ===== Luffy Image ===== */
+.luffy-image {
+  width: clamp(180px, 35vw, 320px);
+  height: auto;
+  margin-top: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (max-width: 768px) {
+  .hero-logo-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+  .logo-left img,
+  .logo-right img {
+    height: clamp(40px, 9vw, 70px);
+  }
+  .luffy-image {
+    animation: none;
+    margin-top: 1rem;
+  }
+}
+
+/* ===== General ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  scrollbar-width: none;
+}
+
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.onepiece-hero > .container {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+</style>
 {% endblock %}
+
 
 {% block content %}
 <!-- Hero Section -->
 <section class="onepiece-hero">
     <canvas id="particle-canvas"></canvas>
-    <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="RVCE Logo" class="hero-logo-left">
-    <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="CC Logo" class="hero-logo-right">
-    <img src="{{ url_for('views.themes', path='img/thws_logo.png') }}" alt="THWS Logo" class="hero-logo-right2">
+<div class="hero-logo-bar">
+    <div class="logo-left">
+      <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="">
+      <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="">
+    </div>
+    <div class="logo-right">
+      <img src="{{ url_for('views.themes', path='img/thws_logo.png') }}" alt="">
+    </div>
+  </div>
+
+
     <div class="container text-center">
         <h1 class="event-title">Road to Poneglyph</h1>
         <p class="onepiece-subtitle">Hack your way to Laugh Tale!</p>
