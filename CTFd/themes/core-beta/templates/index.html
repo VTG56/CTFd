@@ -150,6 +150,7 @@
   /* ===== General ===== */
   body,
   html {
+    zoom = 0.9;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -225,6 +226,7 @@
 
   function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
+    
     const dpr = window.devicePixelRatio || 1;
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
@@ -239,7 +241,7 @@
 
   let particles = [];
   const config = {
-    particleCount: window.innerWidth < 768 ? 35 : 120,
+    particleCount: window.innerWidth < 768 ? 35 : 140,
     maxSize: window.innerWidth < 768 ? 2.2 : 2.2,
     minSize: 0.6,
     maxSpeed: window.innerWidth < 768 ? 0.8 : 1.1,

@@ -3,9 +3,9 @@
 {% block stylesheets %}
 {{ super() }}
 <style>
-  @keyframes zoomIn {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
   
   .background-container {
@@ -30,6 +30,7 @@
     position: relative;
     z-index: 1;
   }
+  
   :root {
     --onepiece-gold: #ffd700;
     --onepiece-red: #dc143c;
@@ -46,49 +47,67 @@
   .jumbotron {
     background-color: transparent !important;
     border-bottom: 3px solid var(--onepiece-gold);
-    padding-bottom: 1rem;
-    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 3rem;
   }
 
   .container h1 {
     color: var(--onepiece-gold);
-    text-shadow: 2px 2px 4px var(--onepiece-red);
+    text-shadow: 3px 3px 6px var(--onepiece-red), 0 0 25px rgba(255, 215, 0, 0.5);
     font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 3.5rem;
   }
 
   .themed-container {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(220, 20, 60, 0.2) 100%);
-    border: 2px solid var(--onepiece-gold);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.4) 0%, rgba(220, 20, 60, 0.3) 50%, rgba(139, 0, 0, 0.4) 100%);
+    border: 3px solid var(--onepiece-gold);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 60px rgba(255, 215, 0, 0.1);
   }
 
   .form-control {
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 2px solid var(--onepiece-orange);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid var(--onepiece-orange);
     color: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
   }
 
   .form-control:focus {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     border-color: var(--onepiece-gold);
     color: #fff;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .form-label {
     color: var(--onepiece-gold);
     font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem;
   }
 
   .btn-success {
     background: linear-gradient(135deg, var(--onepiece-gold) 0%, var(--onepiece-orange) 100%);
-    border: 2px solid var(--onepiece-gold);
+    border: 3px solid var(--onepiece-gold);
     color: #000;
     font-weight: bold;
+    font-size: 1.1rem;
+    padding: 12px 32px;
     transition: all 0.3s ease;
     text-shadow: none;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
   }
 
   .btn-success:hover {
@@ -96,17 +115,38 @@
     border-color: var(--onepiece-gold);
     color: var(--onepiece-gold);
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+  }
+  
+  .crew-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
   
   .crew-image {
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-    transition: all 0.3s ease;
+    max-height: 450px;
+    height: 450px;
+    width: auto;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    transition: all 0.4s ease;
+    animation: float 3s ease-in-out infinite;
   }
   
   .crew-image:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9));
+    animation: none;
+  }
+  @media (max-width: 768px) {
+    .themed-container {
+      padding: 2rem 1.5rem;
+    }
+    
+    .container h1 {
+      font-size: 2.5rem;
+    }
   }
 </style>
 {% endblock %}
@@ -116,50 +156,54 @@
     <div class="background-image"></div>
   </div>
   <div class="content-wrapper">
-  <div class="jumbotron">
-    <div class="container">
-      <h1>{% trans %}Join Pirate Crew{% endtrans %}</h1>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>{% trans %}Join Pirate Crew{% endtrans %}</h1>
+      </div>
     </div>
-  </div>
-  <div class="container-fluid">
-    <div class="row align-items-center">
-      <!-- Pirate crew member on the left -->
-      <div class="col-md-3 d-none d-md-block text-center">
-        <img src="{{ url_for('views.themes', path='img/law.png') }}" alt="Pirate Crew" class="img-fluid crew-image" style="max-height: 300px;">
-      </div>
-      
-      <!-- Main content in the center -->
-      <div class="col-md-6">
-        <div class="themed-container">
-          {% include "components/errors.html" %}
-
-          {% with form = Forms.teams.TeamJoinForm() %}
-            <form method="POST">
-              <div class="mb-3">
-                {{ form.name.label(class="form-label") }}
-                {{ form.name(class="form-control") }}
-              </div>
-
-              <div class="mb-3">
-                {{ form.password.label(class="form-label") }}
-                {{ form.password(class="form-control") }}
-              </div>
-
-              <div class="row pt-3">
-                <div class="col-md-12">
-                  {{ form.submit(class="btn btn-success float-end px-4") }}
-                </div>
-              </div>
-              {{ form.nonce() }}
-            </form>
-          {% endwith %}
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <!-- Pirate crew member on the left -->
+        <div class="col-md-3 d-none d-md-block">
+          <div class="crew-image-container">
+            <img src="{{ url_for('views.themes', path='img/3dluffy.png') }}" alt="Pirate Crew" class="img-fluid crew-image">
+          </div>
         </div>
-      </div>
-      
-      <!-- Pirate crew member on the right -->
-      <div class="col-md-3 d-none d-md-block text-center">
-        <img src="{{ url_for('views.themes', path='img/sunny.png') }}" alt="Pirate Crew" class="img-fluid crew-image" style="max-height: 300px; transform: scaleX(-1);">
-      </div>
+        
+        <!-- Main content in the center -->
+        <div class="col-md-6">
+          <div class="themed-container">
+            {% include "components/errors.html" %}
+
+            {% with form = Forms.teams.TeamJoinForm() %}
+              <form method="POST">
+                <div class="mb-4">
+                  {{ form.name.label(class="form-label") }}
+                  {{ form.name(class="form-control") }}
+                </div>
+
+                <div class="mb-4">
+                  {{ form.password.label(class="form-label") }}
+                  {{ form.password(class="form-control") }}
+                </div>
+
+                <div class="row pt-3">
+                  <div class="col-md-12">
+                    {{ form.submit(class="btn btn-success float-end px-4") }}
+                  </div>
+                </div>
+                {{ form.nonce() }}
+              </form>
+            {% endwith %}
+          </div>
+        </div>
+        
+        <!-- Pirate crew member on the right -->
+        <div class="col-md-3 d-none d-md-block">
+          <div class="crew-image-container">
+            <img src="{{ url_for('views.themes', path='img/ussop.png') }}" alt="Pirate Crew" class="img-fluid crew-image">
+          </div>
+        </div>
       </div>
     </div>
   </div>
