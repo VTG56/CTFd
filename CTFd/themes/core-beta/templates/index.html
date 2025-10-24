@@ -1,163 +1,176 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
+
 {{ Assets.css("assets/scss/main.scss") }}
 <style>
-@font-face {
-  font-family: 'One Piece Font';
-  src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Intrepid';
-  src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
-  font-display: swap;
-}
-
-/* ===== Hero Section ===== */
-.onepiece-hero {
-  background: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)),
-              url('{{ url_for("views.themes", path="img/OP-BG.png") }}') center/cover no-repeat;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* center everything vertically */
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;        
-
-}
-
-.hero-logo-bar {
-  position: absolute;
-  top: 2%;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2%;
-  z-index: 0;
-  pointer-events: none;        
-}
-
-.logo-left {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  pointer-events: none;        
-}
-
-.logo-left img,
-.logo-right img {
-  pointer-events: none;        
-  height: clamp(60px, 8vw, 100px);
-  width: auto;
-}
-
-.logo-right img {
-  height: clamp(60px, 8vw, 100px);
-  pointer-events: none;        
-}
-
-/* ===== Title & Subtitle ===== */
-.event-title {
-  font-family: 'One Piece Font', sans-serif;
-  font-size: clamp(2.2rem, 6vw, 5.3rem);
-  color: #ffd700;
-  text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #000;
-  margin-bottom: 1.2rem;
-  text-align: center;
-}
-
-.onepiece-subtitle {
-  font-family: 'Intrepid', Arial, sans-serif;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  color: #ff6b35;
-  text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111, 0 0 6px #ffd700;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* ===== Button ===== */
-.btn-onepiece-orange {
-  background-color: #ff6b35;
-  color: white;
-  border: 3px solid #111;
-  padding: 0.6rem 1.5rem;
-  border-radius: 50px;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 0 #c44520;
-  pointer-events: auto;        
-
-}
-
-.btn-onepiece-orange:hover {
-  background-color: #ff8c5e;
-  color: #ffd700;
-  border-color: #ffd700;
-  transform: translateY(-2px);
-}
-
-/* ===== Luffy Image ===== */
-.luffy-image {
-  width: clamp(180px, 35vw, 320px);
-  height: auto;
-  margin-top: 1.5rem;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@media (max-width: 768px) {
-  .hero-logo-bar {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 1rem;
+  @font-face {
+    font-family: 'One Piece Font';
+    src: url('{{ url_for("views.themes", path="webfonts/onepiecefont.ttf") }}') format('truetype');
+    font-display: swap;
   }
+
+  @font-face {
+    font-family: 'Intrepid';
+    src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
+    font-display: swap;
+  }
+
+  /* ===== Hero Section ===== */
+  .onepiece-hero {
+    background: linear-gradient(rgba(10, 10, 10, 0.55), rgba(10, 10, 10, 0.55)),
+    url('{{ url_for("views.themes", path="img/OP-BG.png") }}') center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* center everything vertically */
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+
+  }
+
+  .hero-logo-bar {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .logo-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    pointer-events: none;
+  }
+
   .logo-left img,
   .logo-right img {
-    height: clamp(40px, 9vw, 70px);
+    pointer-events: none;
+    height: clamp(60px, 8vw, 100px);
+    width: auto;
   }
+
+  .logo-right img {
+    height: clamp(60px, 8vw, 100px);
+    pointer-events: none;
+  }
+
+  /* ===== Title & Subtitle ===== */
+  .event-title {
+    font-family: 'One Piece Font', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 5.3rem);
+    color: #ffd700;
+    text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #000;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+
+  .onepiece-subtitle {
+    font-family: 'Intrepid', Arial, sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #ff6b35;
+    text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111, 0 0 6px #ffd700;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ===== Button ===== */
+  .btn-onepiece-orange {
+    background-color: #ff6b35;
+    color: white;
+    border: 3px solid #111;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 0 #c44520;
+    pointer-events: auto;
+
+  }
+
+  .btn-onepiece-orange:hover {
+    background-color: #ff8c5e;
+    color: #ffd700;
+    border-color: #ffd700;
+    transform: translateY(-2px);
+  }
+
+  /* ===== Luffy Image ===== */
   .luffy-image {
-    animation: none;
-    margin-top: 1rem;
+    width: clamp(180px, 35vw, 320px);
+    height: auto;
+    margin-top: 1.5rem;
+    animation: bounce 2s infinite;
   }
-}
 
-/* ===== General ===== */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  scrollbar-width: none;
-}
+  @keyframes bounce {
 
-#particle-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: auto;
-}
+    0%,
+    100% {
+      transform: translateY(0);
+    }
 
-.onepiece-hero .container {
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-logo-bar {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+
+    .logo-left img,
+    .logo-right img {
+      height: clamp(40px, 9vw, 70px);
+      pointer-events: none;
+    }
+
+    .luffy-image {
+      animation: none;
+      margin-top: 1rem;
+    }
+  }
+
+  /* ===== General ===== */
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    scrollbar-width: none;
+  }
+
+  #particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: auto;
+  }
+
+  .onepiece-hero .container {
     position: relative;
     z-index: 1;
     padding-top: clamp(70px, 15vw, 80px);
-}
-
+  }
 </style>
 {% endblock %}
 
@@ -165,8 +178,8 @@ body, html {
 {% block content %}
 <!-- Hero Section -->
 <section class="onepiece-hero">
-    <canvas id="particle-canvas"></canvas>
-<div class="hero-logo-bar">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-logo-bar">
     <div class="logo-left">
       <img src="{{ url_for('views.themes', path='img/RVCE_Logo_With_Text.png') }}" alt="">
       <img src="{{ url_for('views.themes', path='img/CCLogo_BG_Removed.png') }}" alt="">
@@ -178,53 +191,54 @@ body, html {
   </div>
 
 
-    <div class="container text-center">
-        <h1 class="event-title">Road to Poneglyph</h1>
-        <p class="onepiece-subtitle">Hack your way to Laugh Tale!</p>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <p class="lead text-white mb-4" style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
-                    Embark on an epic cybersecurity adventure! Navigate through challenges, defeat rival pirates, and become the ultimate Pirate King of Hacking!
-                </p>
-                
-                <div class="d-flex justify-content-center gap-3">
-                    <div class="d-flex flex-column align-items-center">
-                        {% if authed() %}
-                            <a href="{{ url_for('challenges.listing') }}" class="btn btn-onepiece-orange" style="min-width: 200px;">
-                                <i class="fas fa-anchor me-2"></i> Start Your Journey
-                            </a>
-                        {% else %}
-                            <a href="{{ url_for('auth.register') }}" class="btn btn-onepiece-orange" style="min-width: 200px;">
-                                <i class="fas fa-anchor me-2"></i> Join the Crew
-                            </a>
-                        {% endif %}
-                        <img src="{{ url_for('views.themes', path='img/OP-Monkey.png') }}" alt="Luffy" class="luffy-image">
-                    </div>
-                </div>
-            </div>
+  <div class="container text-center">
+    <h1 class="event-title">Road to Poneglyph</h1>
+    <p class="onepiece-subtitle">Hack your way to Laugh Tale!</p>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <p class="lead text-white mb-4" style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+          Embark on an epic cybersecurity adventure! Navigate through challenges, defeat rival pirates, and become the ultimate Pirate King of Hacking!
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+          <div class="d-flex flex-column align-items-center">
+            {% if authed() %}
+            <a href="{{ url_for('challenges.listing') }}" class="btn btn-onepiece-orange" style="min-width: 200px;">
+              <i class="fas fa-anchor me-2"></i> Start Your Journey
+            </a>
+            {% else %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-onepiece-orange" style="min-width: 200px;">
+              <i class="fas fa-anchor me-2"></i> Join the Crew
+            </a>
+            {% endif %}
+            <img src="{{ url_for('views.themes', path='img/OP-Monkey.png') }}" alt="Luffy" class="luffy-image">
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <script>
-const canvas = document.getElementById('particle-canvas');
-const ctx = canvas.getContext('2d');
-function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr);
-  width = rect.width;
-  height = rect.height;
-}
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
 
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    width = rect.width;
+    height = rect.height;
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
 
 
-let particles = [];
-const config = {
+  let particles = [];
+  const config = {
     particleCount: window.innerWidth < 768 ? 35 : 120,
     maxSize: window.innerWidth < 768 ? 2.2 : 2.2,
     minSize: 0.6,
@@ -234,127 +248,169 @@ const config = {
     particleColor: "#F8B301",
     lineColor: "rgba(248,179,1,0.17)",
     maxCursorConnections: window.innerWidth < 768 ? 3 : 4
-};
+  };
 
-const mouse = { x:null, y:null, active:false };
+  const mouse = {
+    x: null,
+    y: null,
+    active: false
+  };
 
-canvas.style.position = 'absolute';
-canvas.style.top = 0;
-canvas.style.left = 0;
-canvas.style.zIndex = 1;  // behind content
+  canvas.style.position = 'absolute';
+  canvas.style.top = 0;
+  canvas.style.left = 0;
+  canvas.style.zIndex = 1; // behind content
 
-class Particle {
-    constructor(x,y){
-        this.x = x ?? Math.random()*width;
-        this.y = y ?? Math.random()*height;
-        this.size = Math.random()*(config.maxSize-config.minSize)+config.minSize;
-        this.speedX = (Math.random()-0.5)*config.maxSpeed*2;
-        this.speedY = (Math.random()-0.5)*config.maxSpeed*2;
+  class Particle {
+    constructor(x, y, special = false) {
+      this.x = x ?? Math.random() * width;
+      this.y = y ?? Math.random() * height;
+      this.size = Math.random() * (config.maxSize - config.minSize) + config.minSize;
+      this.speedX = (Math.random() - 0.5) * config.maxSpeed * 2;
+      this.speedY = (Math.random() - 0.5) * config.maxSpeed * 2;
+      this.special = special; // true for click burst
+      this.opacity = special ? 1 : undefined; // start fully visible
     }
-    update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if(this.x>width) this.x=0;
-        if(this.x<0) this.x=width;
-        if(this.y>height) this.y=0;
-        if(this.y<0) this.y=height;
-    }
-    draw(){
-        ctx.fillStyle = config.particleColor;
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fill();
-    }
-}
 
-function initParticles(){
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.special) {
+        this.opacity -= 0.01; // decrease opacity by fixed amount per frame
+        if (this.opacity < 0) this.opacity = 0;
+      } else {
+        // wrap around for normal particles
+        if (this.x > width) this.x = 0;
+        if (this.x < 0) this.x = width;
+        if (this.y > height) this.y = 0;
+        if (this.y < 0) this.y = height;
+      }
+    }
+
+    draw() {
+      ctx.save();
+      if (this.special) ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = config.particleColor;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+
+  function initParticles() {
     particles = [];
-    for(let i=0;i<config.particleCount;i++){
-        particles.push(new Particle());
+    for (let i = 0; i < config.particleCount; i++) {
+      particles.push(new Particle());
     }
-}
+  }
 
-function connectParticles(){
-    for(let a=0;a<particles.length;a++){
-        for(let b=a+1;b<particles.length;b++){
-            let dx = particles[a].x - particles[b].x;
-            let dy = particles[a].y - particles[b].y;
-            let d2 = dx*dx + dy*dy;
-            if(d2 < config.connectionDistance*config.connectionDistance){
-                ctx.strokeStyle = config.lineColor;
-                ctx.lineWidth = 1.6 - d2/(config.connectionDistance*config.connectionDistance);
-                ctx.beginPath();
-                ctx.moveTo(particles[a].x,particles[a].y);
-                ctx.lineTo(particles[b].x,particles[b].y);
-                ctx.stroke();
-            }
+  function connectParticles() {
+    for (let a = 0; a < particles.length; a++) {
+      for (let b = a + 1; b < particles.length; b++) {
+        let dx = particles[a].x - particles[b].x;
+        let dy = particles[a].y - particles[b].y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 < config.connectionDistance * config.connectionDistance) {
+          ctx.strokeStyle = config.lineColor;
+          ctx.lineWidth = 1.6 - d2 / (config.connectionDistance * config.connectionDistance);
+          ctx.beginPath();
+          ctx.moveTo(particles[a].x, particles[a].y);
+          ctx.lineTo(particles[b].x, particles[b].y);
+          ctx.stroke();
         }
+      }
     }
-}
+  }
 
-function connectToMouse(){
-    if(!mouse.active || mouse.x===null) return;
-    let closest = particles.slice().filter(p=>{
-        let dx = p.x - mouse.x;
-        let dy = p.y - mouse.y;
-        return (dx*dx + dy*dy) < config.mouseRadius*config.mouseRadius;
-    }).sort((a,b)=>{
-        let da=(a.x-mouse.x)**2+(a.y-mouse.y)**2;
-        let db=(b.x-mouse.x)**2+(b.y-mouse.y)**2;
-        return da-db;
+  function connectToMouse() {
+    if (!mouse.active || mouse.x === null) return;
+    let closest = particles.slice().filter(p => {
+      let dx = p.x - mouse.x;
+      let dy = p.y - mouse.y;
+      return (dx * dx + dy * dy) < config.mouseRadius * config.mouseRadius;
+    }).sort((a, b) => {
+      let da = (a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2;
+      let db = (b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2;
+      return da - db;
     }).slice(0, config.maxCursorConnections);
 
-    closest.forEach(p=>{
-        ctx.strokeStyle = "#F8B301";
-        ctx.lineWidth = 0.3;
-        ctx.beginPath();
-        ctx.moveTo(mouse.x,mouse.y);
-        ctx.lineTo(p.x,p.y);
-        ctx.stroke();
+    closest.forEach(p => {
+      ctx.strokeStyle = "#F8B301";
+      ctx.lineWidth = 0.3;
+      ctx.beginPath();
+      ctx.moveTo(mouse.x, mouse.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
 
-        let dx=mouse.x-p.x, dy=mouse.y-p.y;
-        p.x += dx*0.05;
-        p.y += dy*0.05;
+      let dx = mouse.x - p.x,
+        dy = mouse.y - p.y;
+      p.x += dx * 0.05;
+      p.y += dy * 0.05;
     });
-}
+  }
 
-function animate(){
-    ctx.clearRect(0,0,width,height);
-    particles.forEach(p=>{p.update();p.draw();});
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.update();
+      p.draw();
+
+      if (p.special && p.opacity <= 0.03) {
+        particles.splice(i, 1); // remove faded burst particle
+      }
+    }
+
     connectParticles();
     connectToMouse();
     requestAnimationFrame(animate);
-}
+  }
 
-canvas.addEventListener('mousemove', e=>{
+
+
+  canvas.addEventListener('mousemove', e => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
     mouse.active = true;
-});
+  });
 
-canvas.addEventListener('mouseout', ()=>{
-    mouse.active=false;
-});
+  canvas.addEventListener('mouseout', () => {
+    mouse.active = false;
+  });
 
-canvas.addEventListener('click', e=>{
+
+  // Correct click handler
+  canvas.addEventListener('click', e => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    // spawn 3 new particles at click location
-    for(let i=0;i<3;i++){
-        particles.push(new Particle(x,y));
-    }
-});
 
-window.addEventListener('resize', ()=>{
+    for (let i = 0; i < 16; i++) {
+      const angle = (Math.PI * 2) / 16 * i;
+      const speed = 5 + Math.random() * 3;
+      const p = new Particle(x, y, true); // special = true
+      p.speedX = Math.cos(angle) * speed;
+      p.speedY = Math.sin(angle) * speed;
+      p.size = 3.2;
+      particles.push(p);
+    }
+  });
+
+
+
+  window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     initParticles();
-});
+  });
 
-initParticles();
-animate();
+  initParticles();
+  animate();
 </script>
 
 
