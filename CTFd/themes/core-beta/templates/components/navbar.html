@@ -1,22 +1,43 @@
+<style>
+.navbar-brand .navlogo {
+  height: auto;
+  max-height: 35px; 
+}
+
+@media (max-width: 768px) {
+  .navbar-brand .navlogo {
+    max-height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand .navlogo {
+    max-height: 20px; 
+  }
+}
+
+</style>
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: linear-gradient(135deg, #8b0000 0%, #dc143c 50%, #8b0000 100%); border-bottom: 3px solid #ffd700;">
   <div class="container">
-    <a href="{{ url_for('views.static_html', route='') }}" class="navbar-brand">
+<a href="{{ url_for('views.static_html', route='') }}" class="navbar-brand">
   {% if Configs.ctf_logo %}
     <img
       src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
       alt="{{ Configs.ctf_name }}"
-      height="40"   
-      style="object-fit: contain;"
+      class="img-fluid navlogo"
+      style="max-height: 40px; object-fit: contain;"
     >
   {% else %}
     <img
       src="{{ url_for('views.themes', path='img/Navlogo.png') }}"
       alt="Road to Poneglyph"
-      height="26"
-      style="object-fit: contain;"
+      class="img-fluid navlogo"
+      style="max-height: 35px; object-fit: contain;"
     >
   {% endif %}
 </a>
+
 
 
     <button
