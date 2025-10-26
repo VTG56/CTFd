@@ -175,30 +175,19 @@ class ServerConfig(object):
     ]
 
     # === EMAIL ===
-    MAILFROM_ADDR: str = config_ini["email"]["MAILFROM_ADDR"] \
-        or "noreply@examplectf.com"
+    MAILFROM_ADDR: str = "rvctf@gmail.com"   # or whatever email you wanna appear as sender
 
-    MAIL_SERVER: str = empty_str_cast(config_ini["email"]["MAIL_SERVER"])
-
-    MAIL_PORT: int = empty_str_cast(config_ini["email"]["MAIL_PORT"])
-
-    MAIL_USEAUTH: bool = process_boolean_str(config_ini["email"]["MAIL_USEAUTH"])
-
-    MAIL_USERNAME: str = empty_str_cast(config_ini["email"]["MAIL_USERNAME"])
-
-    MAIL_PASSWORD: str = empty_str_cast(config_ini["email"]["MAIL_PASSWORD"])
-
-    MAIL_TLS: bool = process_boolean_str(config_ini["email"]["MAIL_TLS"])
-
-    MAIL_SSL: bool = process_boolean_str(config_ini["email"]["MAIL_SSL"])
-
-    MAILSENDER_ADDR: str = empty_str_cast(config_ini["email"]["MAILSENDER_ADDR"])
-
-    MAILGUN_API_KEY: str = empty_str_cast(config_ini["email"]["MAILGUN_API_KEY"])
-
-    MAILGUN_BASE_URL: str = empty_str_cast(config_ini["email"]["MAILGUN_API_KEY"])
-
-    MAIL_PROVIDER: str = empty_str_cast(config_ini["email"].get("MAIL_PROVIDER"))
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_PORT: int = 587
+    MAIL_USEAUTH: bool = True
+    MAIL_USERNAME: str = "rvcectf@gmail.com"
+    MAIL_PASSWORD: str = "ozfh cvfb pzbk olqq"
+    MAIL_TLS: bool = True
+    MAIL_SSL: bool = False
+    MAILSENDER_ADDR: str = "rvctf@gmail.com"
+    MAILGUN_API_KEY: str = ""
+    MAILGUN_BASE_URL: str = ""
+    MAIL_PROVIDER: str = "smtp"
 
     # === LOGS ===
     LOG_FOLDER: str = empty_str_cast(config_ini["logs"]["LOG_FOLDER"]) \
