@@ -15,8 +15,7 @@
     src: url('{{ url_for("views.themes", path="webfonts/intrepid.ttf") }}') format('truetype');
     font-display: swap;
   }
-
-  /* ===== Hero Section ===== */
+  
   .onepiece-hero {
     background: linear-gradient(rgba(10, 10, 10, 0.55), rgba(10, 10, 10, 0.55)),
     url('{{ url_for("views.themes", path="img/OP-BG.png") }}') center/cover no-repeat;
@@ -24,7 +23,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* center everything vertically */
+    
     align-items: center;
     position: relative;
     overflow: hidden;
@@ -172,6 +171,45 @@
     z-index: 1;
     padding-top: clamp(70px, 15vw, 80px);
   }
+
+.btn-onepiece-discord {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ff6b35; 
+  color: #fff;
+  font-weight: bold;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  border: 3px solid #111;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Intrepid', Arial, sans-serif;
+  box-shadow: 0 4px 0 #c44520;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+}
+
+.btn-onepiece-discord:hover {
+  background-color: #ff8c5e;
+  color: #ffd700;
+  border-color: #ffd700;
+  transform: translateY(-2px);
+}
+
+.discord-icon {
+  width: 24px;
+  height: 24px;
+}
+.discord-subtext {
+  font-family: 'Intrepid', Arial, sans-serif;
+  font-size: 0.9rem;
+  color: #ffd700;
+  margin-top: 4px;
+  text-align: center;
+}
+
+
 </style>
 {% endblock %}
 
@@ -213,6 +251,15 @@
             </a>
             {% endif %}
             <img src="{{ url_for('views.themes', path='img/OP-Monkey.png') }}" alt="Luffy" class="luffy-image">
+            <div class="mt-1">
+  <a href="https://discord.com/invite/QafZUmfCuY" target="_blank" class="btn btn-onepiece-discord">
+    <img src="{{ url_for('views.themes', path='img/discord.png') }}" alt="Discord" class="discord-icon">
+    Join our Discord !!
+  </a>
+  <p class="discord-subtext">For updates, support & community</p>
+
+</div>
+
           </div>
         </div>
       </div>
