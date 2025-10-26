@@ -115,7 +115,7 @@ def successful_registration_notification(addr):
         or DEFAULT_SUCCESSFUL_REGISTRATION_EMAIL_BODY,
         ctf_name=get_config("ctf_name"),
         ctf_description=get_config("ctf_description"),
-        url=url_for("views.static_html", _external=True),
+        url=url_for("views.static_html", route="index", _external=True)
     )
 
     subject = safe_format(

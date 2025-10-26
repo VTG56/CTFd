@@ -175,8 +175,7 @@ class ServerConfig(object):
     ]
 
     # === EMAIL ===
-    MAILFROM_ADDR: str = "rvctf@gmail.com"   # or whatever email you wanna appear as sender
-
+    MAILFROM_ADDR: str = "rvctf@gmail.com"  
     MAIL_SERVER: str = "smtp.gmail.com"
     MAIL_PORT: int = 587
     MAIL_USEAUTH: bool = True
